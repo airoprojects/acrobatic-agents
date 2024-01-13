@@ -5,3 +5,7 @@
 
 - DeepMimic [github](https://github.com/xbpeng/DeepMimic)
 - DeepMimic [paper](https://dl.acm.org/doi/pdf/10.1145/3197517.3201311)
+
+- DeepMimic Mujoco in tensorflow [github](https://github.com/mingfeisun/DeepMimic_mujoco/tree/master/src) 
+
+- Mujoco pytorch [github](https://github.com/seolhokim/Mujoco-Pytorch)
