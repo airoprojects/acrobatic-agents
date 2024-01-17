@@ -1,6 +1,8 @@
 <mujoco model='humanoid'>
     <compiler inertiafromgeom='true' angle='degree'/>
 
+    <option gravity="0 0 -9.81" />
+
     <default>
         <joint limited='true' damping='1' armature='0' />
         <geom contype='1' conaffinity='1' condim='1' rgba='0.8 0.6 .4 1'

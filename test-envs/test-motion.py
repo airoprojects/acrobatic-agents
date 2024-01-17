@@ -1,35 +1,65 @@
-import mujoco_py
-import os
+import gymnasium as gym
 import numpy as np
-import time
 
-# Load the model from the XML file
-model = mujoco_py.load_model_from_path("humanoid.xml")
-sim = mujoco_py.MjSim(model)
+def simple_walking_policy(observation):
+    # This is a very basic and naive policy, just for demonstration.
+    # It oscillates the joints within a mid-range to mimic a walking pattern.
+    # In practice, you'd need a much more sophisticated approach, likely using RL.
+    
+    # Assuming the action space is continuous and symmetric around zero
+    joint_angles = observation[:env.action_space.shape[0]]
+    action = np.sin(joint_angles)
+    return action
 
-# Create a viewer to render the simulation
-viewer = mujoco_py.MjViewer(sim)
+wait = 35
+jump = 70
 
-# Main simulation loop
-while True:
-    # Step the simulation
-    sim.step()
-    viewer.render()
+def simple_jump_policy(observation, step):
+    action = np.zeros(env.action_space.shape[0])
 
-    # Apply control to the joints
-    for i in range(sim.model.njnt):
-        joint_name = sim.model.joint_id2name(i)
-        joint_pos = sim.data.get_joint_qpos(joint_name)
-        joint_vel = sim.data.get_joint_qvel(joint_name)
+    # Simplified logic for bending and extending legs
+    if step < wait:
+        action = np.zeros(17, dtype=np.float32)
 
-        # Simple control logic (modify as needed)
-        # For example, applying a sinusoidal signal based on the simulation time
-        control_signal = np.sin(sim.data.time)
+    elif wait <= step < jump:  # Bend legs
+        # action[4] = 0.4  
+        # action[8] = 0.4 
 
-        # Apply the control signal to the joint
-        sim.data.ctrl[i] = control_signal
+        action[6] = 0.4  
+        action[10] = 0.4 
 
-    time.sleep(0.01)  # Adjust as needed for your simulation speed
+    # elif 55 <= step < 80:  # Extend legs
+    #     action[4] = 0.4  
+    #     action[8] = 0.4 
 
-    # if viewer.is_alive() is False:
-    #     break
+    #     action[6] = 0.4  
+    #     action[10] = 0.4 
+
+      
+    elif step >= jump:
+         action = np.zeros(17, dtype=np.float32)
+
+    # print(action)
+    return action
+
+env = gym.make("Humanoid-v4", render_mode="human")
+observation, info = env.reset()
+
+step = 0
+
+for _ in range(1000):
+    # action = simple_walking_policy(observation)  
+    action = simple_jump_policy(observation, step) 
+    observation, reward, terminated, truncated, info = env.step(action)
+
+    # if terminated: #or truncated:
+    #     observation, info = env.reset()
+    #     step = 0
+
+    if step >= 100:
+        env.reset()  
+        step = 0 
+    
+    step += 1
+
+env.close()
