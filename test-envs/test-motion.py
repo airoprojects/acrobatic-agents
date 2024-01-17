@@ -11,22 +11,25 @@ def simple_walking_policy(observation):
     action = np.sin(joint_angles)
     return action
 
-wait = 35
+wait = 35 #step of iteration that must wait
 jump = 70
 
 def simple_jump_policy(observation, step):
-    action = np.zeros(env.action_space.shape[0])
+    action = np.zeros(env.action_space.shape[0]) 
+
 
     # Simplified logic for bending and extending legs
     if step < wait:
+        #do nothing
         action = np.zeros(17, dtype=np.float32)
+        # 17 -> number of joints
 
     elif wait <= step < jump:  # Bend legs
         # action[4] = 0.4  
         # action[8] = 0.4 
 
-        action[6] = 0.4  
-        action[10] = 0.4 
+        action[6] = 0.4  # torque max to joint left
+        action[10] = 0.4 # torque max to joint right
 
     # elif 55 <= step < 80:  # Extend legs
     #     action[4] = 0.4  
