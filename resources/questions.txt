@@ -1,6 +1,0 @@
-
-1. task --> backflip
-
-2. dataset --> source of motion tracked images
-
-3. environment -->  env capable to model correct reward
