@@ -17,10 +17,10 @@ datasets_path = root_dir  + '/datasets/'
 sys.path.insert(0, datasets_path)
 
 # Create the environment
-env = gym.make("Humanoid-v4", render_mode="human")
+env = gym.make("HumanoidStandup-v4", render_mode="human")
 
 # Extract actions from expert policy
-expert_actions = np.load(datasets_path+'1-expert-data/expert_actions.npy')
+expert_actions = np.load(datasets_path+'3-expert-data/expert_actions.npy')
 # expert_actions = np.load('expert_actions.npy')
 
 # Test the trained agent

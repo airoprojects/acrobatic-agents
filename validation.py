@@ -1,5 +1,14 @@
 import gymnasium as gym
-env = gym.make("Humanoid-v4", render_mode="human", xml_file="humanoid_test.xml" )
+import argparse
+
+parser = argparse.ArgumentParser()
+env_id_list = ["Humanoid-v4", "HumanoidStandup-v4"]
+parser.add_argument('--env', type=str, help="Insert gymnasium env_id: {}".format(env_id_list))
+args = parser.parse_args()
+
+env_id = args.env if args.env else 'Humanoid-v4'
+
+env = gym.make(env_id, render_mode="human")
 observation, info = env.reset()
 
 for _ in range(1000):
