@@ -1,6 +1,7 @@
 # Acrobatic Agents
 RL - Sapienza (AIRO) 2023/2024 -  Bruno Francesco Nocera, Leonardo Colosi
 
+
 ## Environment Setup 
 ```code
 conda create --name hum_rl python=3.8
@@ -42,3 +43,6 @@ Solution:
 
 `gym.envs.registry` was previously a complex class that we replaced with a dictionary for simplicity.
 The code should just need to be changed to if env_id not in `gym.envs.registry`
+
+## Useful resources
+To explore some resources used/related to the project look here [resources](resources)
