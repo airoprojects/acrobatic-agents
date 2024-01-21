@@ -11,8 +11,9 @@ def simple_walking_policy(observation):
     action = np.sin(joint_angles)
     return action
 
-wait = 40
-jump = 80
+wait = 30
+
+jump = 90
 
 def simple_jump_policy(observation, step):
     action = np.zeros(env.action_space.shape[0])
@@ -32,19 +33,25 @@ def simple_jump_policy(observation, step):
     elif wait <= step < jump:  
 
         # push legs       
-        action[6] = 0.5
-        action[10] = 0.5 
+        action[6] = 0.4
+        action[10] = 0.4 
 
         # flex torso backward
-        action[0] = 0.4
+        action[0] = 0.1
 
-        # # push shoulders
-        # # action[12] = 0.4
-        # # action[15] = 0.4
+        # move hip forward 
+        action[3] = 0.2
+
+        # move hip up 
+        action[4] = 0.1
+
+        # push shoulders backward
+        action[12] = 0.2
+        action[15] = 0.2
 
         # extend elbows
-        action[13] = -0.4
-        action[16] = -0.4
+        action[13] = -0.2
+        action[16] = -0.2
 
       
     elif step >= jump:
