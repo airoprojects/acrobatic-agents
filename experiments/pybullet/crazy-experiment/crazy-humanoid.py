@@ -8,6 +8,8 @@ import pybullet as p1
 import humanoid_pose_interpolator
 import numpy as np
 
+### pybullet env configuration ### 
+### -------------------------- ### 
 pybullet_client = bullet_client.BulletClient(connection_mode=p1.GUI)
 
 pybullet_client.setAdditionalSearchPath(pybullet_data.getDataPath())
@@ -23,15 +25,20 @@ pybullet_client.configureDebugVisualizer(pybullet_client.COV_ENABLE_Y_AXIS_UP, 1
 pybullet_client.setGravity(0, -9.8, 0)
 
 pybullet_client.setPhysicsEngineParameter(numSolverIterations=10)
+### -------------------------- ### 
 
+### motion capture data        ###
+### -------------------------- ### 
 mocapData = motion_capture_data.MotionCaptureData()
 #motionPath = pybullet_data.getDataPath()+"/data/motions/humanoid3d_walk.txt"
-motionPath = pybullet_data.getDataPath() + "/data/motions/humanoid3d_backflip.txt"
+motionPath = pybullet_data.getDataPath() + "/data/motions/humanoid3d_spinkick.new.txt"
 mocapData.Load(motionPath)
 timeStep = 1. / 600
 useFixedBase = False
 humanoid = humanoid_stable_pd.HumanoidStablePD(pybullet_client, mocapData, timeStep, useFixedBase)
 isInitialized = True
+### -------------------------- ### 
+
 
 pybullet_client.setTimeStep(timeStep)
 pybullet_client.setPhysicsEngineParameter(numSubSteps=2)
@@ -53,7 +60,7 @@ while (1):
 
   keys = pybullet_client.getKeyboardEvents()
   #print(keys)
-  if isKeyTriggered(keys, ' '):
+  if isKeyTriggered(keys, ' '): # press space to trigger the animation
     animating = not animating
 
   if isKeyTriggered(keys, 'b'):
@@ -64,7 +71,7 @@ while (1):
     singleStep = False
     #t = pybullet_client.readUserDebugParameter(timeId)
     #print("t=",t)
-    for i in range(1):
+    for i in range(1): # this somehow control the velocity of the animation
 
       #print("t=", t)
       humanoid.setSimTime(t)
@@ -93,8 +100,9 @@ while (1):
         taus = humanoid.computePDForces(desiredPose, desiredVelocities=None, maxForces=maxForces)
         #Print("taus=",taus)
         humanoid.applyPDForces(taus)
+
       else:
-        humanoid.computeAndApplyPDForces(desiredPose,maxForces=maxForces)
+        humanoid.computeAndApplyPDForces(desiredPose, maxForces=maxForces)
 
       pybullet_client.stepSimulation()
       t += 1. / 600.
