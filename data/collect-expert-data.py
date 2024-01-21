@@ -2,11 +2,14 @@ import gymnasium as gym
 from stable_baselines3 import PPO
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.evaluation import evaluate_policy
+from stable_baselines3.common.type_aliases import Schedule
 
 import numpy as np
 
+import os
 import sys
 import argparse
+from os import path
 from git import Repo
 from tqdm import tqdm
 
@@ -15,7 +18,7 @@ repo = Repo(".", search_parent_directories=True)
 root_dir = repo.git.rev_parse("--show-toplevel")
 
 # Add datasets to path
-datasets_path = root_dir  + '/datasets/'
+datasets_path = root_dir  + '/data/datasets/'
 sys.path.insert(0, datasets_path)
 
 if __name__ == '__main__':
@@ -29,13 +32,21 @@ if __name__ == '__main__':
 
     # Set up the environment
     env_id = args.env if args.env else 'Humanoid-v4'
-    env = gym.make(env_id, render_mode="human")
+    env = gym.make(env_id, render_mode="rgb_array")
 
     # Instantiate the agent
-    expert_model = PPO("MlpPolicy", env_id, verbose=1)
+    expert_model = PPO(
+        "MlpPolicy", 
+        env_id,
+        n_steps=int(4e4),
+        n_epochs=100, 
+        verbose=1
+    )
 
     # Train the agent
-    expert_model.learn(total_timesteps=3e4)
+    expert_model.learn(
+        total_timesteps=3e4
+    )
 
     # Evaluate expert
     mean_reward, std_reward = evaluate_policy(expert_model, Monitor(env), n_eval_episodes=10)
@@ -73,8 +84,16 @@ if __name__ == '__main__':
 
     print("Saving data in: {}".format(save_path))
 
-    np.savez_compressed(
-    save_path,
-    expert_actions=expert_actions,
-    expert_observations=expert_observations,
-    )
+    if path.exists(save_path) == False:
+      print("Destination folder has been created")
+      os.makedirs(save_path)
+
+
+    np.save(save_path+'/expert-actions', expert_actions) 
+    np.save(save_path+'/expert-observations', expert_observations) 
+
+    # np.savez_compressed(
+    # save_path,
+    # expert_actions=expert_actions,
+    # expert_observations=expert_observations,
+    # 
