@@ -13,6 +13,8 @@ pyquaternion
 # stable baseline
 # stable-baselines3[extra]
 
+tensorflow-gpu==1.14
+
 
 
 
