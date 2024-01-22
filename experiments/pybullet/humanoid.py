@@ -45,9 +45,9 @@ timeStep = 1. / 600.
 
 p.setPhysicsEngineParameter(fixedTimeStep=timeStep)
 
-path = pybullet_data.getDataPath() + "/data/motions/humanoid3d_kick.txt"
+# path = pybullet_data.getDataPath() + "/data/motions/humanoid3d_backflip.txt"
 #path	=	pybullet_data.getDataPath()+"/data/motions/humanoid3d_cartwheel.txt"
-#path	=	pybullet_data.getDataPath()+"/data/motions/humanoid3d_walk.txt"
+path	=	pybullet_data.getDataPath()+"/data/motions/humanoid3d_walk.txt"
 
 #p.loadURDF("plane.urdf",[0,0,-1.03])
 print("path	=	", path)
@@ -75,55 +75,55 @@ startLocations = [[0, 0, 2], [0, 0, 0], [0, 0, -2], [0, 0, -4], [0, 0, 4]]
 p.addUserDebugText("Stable PD",
                    [startLocations[0][0], startLocations[0][1] + 1, startLocations[0][2]],
                    [0, 0, 0])
-# p.addUserDebugText("Spherical	Drive",
-#                    [startLocations[1][0], startLocations[1][1] + 1, startLocations[1][2]],
-#                    [0, 0, 0])
-# p.addUserDebugText("Explicit PD",
-#                    [startLocations[2][0], startLocations[2][1] + 1, startLocations[2][2]],
-#                    [0, 0, 0])
-# p.addUserDebugText("Kinematic",
-#                    [startLocations[3][0], startLocations[3][1] + 1, startLocations[3][2]],
-#                    [0, 0, 0])
-# p.addUserDebugText("Stable PD (Py)",
-#                    [startLocations[4][0], startLocations[4][1] + 1, startLocations[4][2]],
-#                    [0, 0, 0])
+p.addUserDebugText("Spherical	Drive",
+                   [startLocations[1][0], startLocations[1][1] + 1, startLocations[1][2]],
+                   [0, 0, 0])
+p.addUserDebugText("Explicit PD",
+                   [startLocations[2][0], startLocations[2][1] + 1, startLocations[2][2]],
+                   [0, 0, 0])
+p.addUserDebugText("Kinematic",
+                   [startLocations[3][0], startLocations[3][1] + 1, startLocations[3][2]],
+                   [0, 0, 0])
+p.addUserDebugText("Stable PD (Py)",
+                   [startLocations[4][0], startLocations[4][1] + 1, startLocations[4][2]],
+                   [0, 0, 0])
 flags=p.URDF_MAINTAIN_LINK_ORDER+p.URDF_USE_SELF_COLLISION
 humanoid = p.loadURDF("humanoid/humanoid.urdf",
                       startLocations[0],
                       globalScaling=0.25,
                       useFixedBase=False,
                       flags=flags)
-# humanoid2 = p.loadURDF("humanoid/humanoid.urdf",
-#                        startLocations[1],
-#                        globalScaling=0.25,
-#                        useFixedBase=False,
-#                        flags=flags)
-# humanoid3 = p.loadURDF("humanoid/humanoid.urdf",
-#                        startLocations[2],
-#                        globalScaling=0.25,
-#                        useFixedBase=False,
-#                        flags=flags)
-# humanoid4 = p.loadURDF("humanoid/humanoid.urdf",
-#                        startLocations[3],
-#                        globalScaling=0.25,
-#                        useFixedBase=False,
-#                        flags=flags)
-# humanoid5 = p.loadURDF("humanoid/humanoid.urdf",
-#                       startLocations[4],
-#                       globalScaling=0.25,
-#                       useFixedBase=False,
-#                       flags=flags)
+humanoid2 = p.loadURDF("humanoid/humanoid.urdf",
+                       startLocations[1],
+                       globalScaling=0.25,
+                       useFixedBase=False,
+                       flags=flags)
+humanoid3 = p.loadURDF("humanoid/humanoid.urdf",
+                       startLocations[2],
+                       globalScaling=0.25,
+                       useFixedBase=False,
+                       flags=flags)
+humanoid4 = p.loadURDF("humanoid/humanoid.urdf",
+                       startLocations[3],
+                       globalScaling=0.25,
+                       useFixedBase=False,
+                       flags=flags)
+humanoid5 = p.loadURDF("humanoid/humanoid.urdf",
+                      startLocations[4],
+                      globalScaling=0.25,
+                      useFixedBase=False,
+                      flags=flags)
 
 humanoid_fix = p.createConstraint(humanoid, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
                                   startLocations[0], [0, 0, 0, 1])
-# humanoid2_fix = p.createConstraint(humanoid2, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
-#                                    startLocations[1], [0, 0, 0, 1])
-# humanoid3_fix = p.createConstraint(humanoid3, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
-#                                    startLocations[2], [0, 0, 0, 1])
-# humanoid3_fix = p.createConstraint(humanoid4, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
-#                                    startLocations[3], [0, 0, 0, 1])
-# humanoid4_fix = p.createConstraint(humanoid5, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
-#                                    startLocations[4], [0, 0, 0, 1])
+humanoid2_fix = p.createConstraint(humanoid2, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
+                                   startLocations[1], [0, 0, 0, 1])
+humanoid3_fix = p.createConstraint(humanoid3, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
+                                   startLocations[2], [0, 0, 0, 1])
+humanoid3_fix = p.createConstraint(humanoid4, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
+                                   startLocations[3], [0, 0, 0, 1])
+humanoid4_fix = p.createConstraint(humanoid5, -1, -1, -1, p.JOINT_FIXED, [0, 0, 0], [0, 0, 0],
+                                   startLocations[4], [0, 0, 0, 1])
 
 startPose = [
     2, 0.847532, 0, 0.9986781045, 0.01410400148, -0.0006980000731, -0.04942300517, 0.9988133229,
@@ -145,10 +145,10 @@ startVel = [
 ]
 
 p.resetBasePositionAndOrientation(humanoid, startLocations[0], [0, 0, 0, 1])
-# p.resetBasePositionAndOrientation(humanoid2, startLocations[1], [0, 0, 0, 1])
-# p.resetBasePositionAndOrientation(humanoid3, startLocations[2], [0, 0, 0, 1])
-# p.resetBasePositionAndOrientation(humanoid4, startLocations[3], [0, 0, 0, 1])
-# p.resetBasePositionAndOrientation(humanoid5, startLocations[4], [0, 0, 0, 1])
+p.resetBasePositionAndOrientation(humanoid2, startLocations[1], [0, 0, 0, 1])
+p.resetBasePositionAndOrientation(humanoid3, startLocations[2], [0, 0, 0, 1])
+p.resetBasePositionAndOrientation(humanoid4, startLocations[3], [0, 0, 0, 1])
+p.resetBasePositionAndOrientation(humanoid5, startLocations[4], [0, 0, 0, 1])
 
 index0 = 7
 for j in range(p.getNumJoints(humanoid)):
@@ -164,8 +164,8 @@ for j in range(p.getNumJoints(humanoid)):
     print("spherical position: ", targetPosition)
     print("spherical velocity: ", targetVel)
     p.resetJointStateMultiDof(humanoid, j, targetValue=targetPosition, targetVelocity=targetVel)
-    # p.resetJointStateMultiDof(humanoid5, j, targetValue=targetPosition, targetVelocity=targetVel)
-    # p.resetJointStateMultiDof(humanoid2, j, targetValue=targetPosition, targetVelocity=targetVel)
+    p.resetJointStateMultiDof(humanoid5, j, targetValue=targetPosition, targetVelocity=targetVel)
+    p.resetJointStateMultiDof(humanoid2, j, targetValue=targetPosition, targetVelocity=targetVel)
   if (jointType == p.JOINT_PRISMATIC or jointType == p.JOINT_REVOLUTE):
     targetPosition = [startPose[index0]]
     targetVel = [startVel[index0]]
@@ -173,8 +173,8 @@ for j in range(p.getNumJoints(humanoid)):
     print("revolute:", targetPosition)
     print("revolute	velocity:", targetVel)
     p.resetJointStateMultiDof(humanoid, j, targetValue=targetPosition, targetVelocity=targetVel)
-    # p.resetJointStateMultiDof(humanoid5, j, targetValue=targetPosition, targetVelocity=targetVel)
-    # p.resetJointStateMultiDof(humanoid2, j, targetValue=targetPosition, targetVelocity=targetVel)
+    p.resetJointStateMultiDof(humanoid5, j, targetValue=targetPosition, targetVelocity=targetVel)
+    p.resetJointStateMultiDof(humanoid2, j, targetValue=targetPosition, targetVelocity=targetVel)
 
 for j in range(p.getNumJoints(humanoid)):
   ji = p.getJointInfo(humanoid, j)
@@ -190,36 +190,36 @@ for j in range(p.getNumJoints(humanoid)):
                                    positionGain=0,
                                    velocityGain=1,
                                    force=[0, 0, 0])
-    # p.setJointMotorControlMultiDof(humanoid5,
-    #                                j,
-    #                                p.POSITION_CONTROL,
-    #                                targetPosition,
-    #                                targetVelocity=[0, 0, 0],
-    #                                positionGain=0,
-    #                                velocityGain=1,
-    #                                force=[0, 0, 0])
-    # p.setJointMotorControlMultiDof(humanoid3,
-    #                                j,
-    #                                p.POSITION_CONTROL,
-    #                                targetPosition,
-    #                                targetVelocity=[0, 0, 0],
-    #                                positionGain=0,
-    #                                velocityGain=1,
-    #                                force=[31, 31, 31])
-    # p.setJointMotorControlMultiDof(humanoid4,
-    #                                j,
-    #                                p.POSITION_CONTROL,
-    #                                targetPosition,
-    #                                targetVelocity=[0, 0, 0],
-    #                                positionGain=0,
-    #                                velocityGain=1,
-    #                                force=[1, 1, 1])
+    p.setJointMotorControlMultiDof(humanoid5,
+                                   j,
+                                   p.POSITION_CONTROL,
+                                   targetPosition,
+                                   targetVelocity=[0, 0, 0],
+                                   positionGain=0,
+                                   velocityGain=1,
+                                   force=[0, 0, 0])
+    p.setJointMotorControlMultiDof(humanoid3,
+                                   j,
+                                   p.POSITION_CONTROL,
+                                   targetPosition,
+                                   targetVelocity=[0, 0, 0],
+                                   positionGain=0,
+                                   velocityGain=1,
+                                   force=[31, 31, 31])
+    p.setJointMotorControlMultiDof(humanoid4,
+                                   j,
+                                   p.POSITION_CONTROL,
+                                   targetPosition,
+                                   targetVelocity=[0, 0, 0],
+                                   positionGain=0,
+                                   velocityGain=1,
+                                   force=[1, 1, 1])
 
   if (jointType == p.JOINT_PRISMATIC or jointType == p.JOINT_REVOLUTE):
     p.setJointMotorControl2(humanoid, j, p.VELOCITY_CONTROL, targetVelocity=0, force=0)
-    # p.setJointMotorControl2(humanoid3, j, p.VELOCITY_CONTROL, targetVelocity=0, force=31)
-    # p.setJointMotorControl2(humanoid4, j, p.VELOCITY_CONTROL, targetVelocity=0, force=10)
-    # p.setJointMotorControl2(humanoid5, j, p.VELOCITY_CONTROL, targetVelocity=0, force=0)
+    p.setJointMotorControl2(humanoid3, j, p.VELOCITY_CONTROL, targetVelocity=0, force=31)
+    p.setJointMotorControl2(humanoid4, j, p.VELOCITY_CONTROL, targetVelocity=0, force=10)
+    p.setJointMotorControl2(humanoid5, j, p.VELOCITY_CONTROL, targetVelocity=0, force=0)
 
   #print(ji)
   print("joint[", j, "].type=", jointTypes[ji[2]])
@@ -237,7 +237,7 @@ for j in range(p.getNumJoints(humanoid)):
     jointType = info[2]
     if (jointType == p.JOINT_PRISMATIC or jointType == p.JOINT_REVOLUTE):
       jointIds.append(j)
-      #paramIds.append(p.addUserDebugParameter(jointName.decode("utf-8"),-4,4,0))
+      paramIds.append(p.addUserDebugParameter(jointName.decode("utf-8"),-4,4,0))
       #print("jointName=",jointName, "at ",	j)
 
 p.changeVisualShape(humanoid, 2, rgbaColor=[1, 0, 0, 1])
@@ -305,7 +305,7 @@ while (p.isConnected()):
   #print("frame=",frame)
   #print("frameNext=", frameNext)
 
-  #getQuaternionSlerp
+  # getQuaternionSlerp
 
   frameData = motion_dict['Frames'][frame]
   frameDataNext = motion_dict['Frames'][frameNext]
@@ -333,7 +333,7 @@ while (p.isConnected()):
     y2zPos = [0, 2, 0.0]
     y2zOrn = p.getQuaternionFromEuler([1.57, 0, 0])
     basePos, baseOrn = p.multiplyTransforms(y2zPos, y2zOrn, basePos1, baseOrn1)
-    # p.resetBasePositionAndOrientation(humanoid2, basePos, baseOrn)
+    p.resetBasePositionAndOrientation(humanoid2, basePos, baseOrn)
 
   chestRotStart = [frameData[9], frameData[10], frameData[11], frameData[8]]
   chestRotEnd = [frameDataNext[9], frameDataNext[10], frameDataNext[11], frameDataNext[8]]
@@ -438,14 +438,14 @@ while (p.isConnected()):
     #	print(po)
     
     
-    # taus = stablePD.computePD(bodyUniqueId=humanoid5,
-    #                             jointIndices=jointIndicesAll,
-    #                             desiredPositions=pose,
-    #                             desiredVelocities=[0] * totalDofs,
-    #                             kps=kpOrg,
-    #                             kds=kdOrg,
-    #                             maxForces=[maxForce] * totalDofs,
-    #                             timeStep=timeStep)
+    taus = stablePD.computePD(bodyUniqueId=humanoid5,
+                                jointIndices=jointIndicesAll,
+                                desiredPositions=pose,
+                                desiredVelocities=[0] * totalDofs,
+                                kps=kpOrg,
+                                kds=kdOrg,
+                                maxForces=[maxForce] * totalDofs,
+                                timeStep=timeStep)
     
     indices = [chest, neck, rightHip, rightKnee,
               rightAnkle, rightShoulder, rightElbow,
@@ -473,142 +473,161 @@ while (p.isConnected()):
                                    velocityGains=kds,
                                    forces=maxForces)
 
-    # taus3 = explicitPD.computePD(bodyUniqueId=humanoid3,
-    #                              jointIndices=jointIndicesAll,
-    #                              desiredPositions=pose,
-    #                              desiredVelocities=[0] * totalDofs,
-    #                              kps=kpOrg,
-    #                              kds=kdOrg,
-    #                              maxForces=[maxForce * 0.05] * totalDofs,
-    #                              timeStep=timeStep)
+    taus3 = explicitPD.computePD(bodyUniqueId=humanoid3,
+                                 jointIndices=jointIndicesAll,
+                                 desiredPositions=pose,
+                                 desiredVelocities=[0] * totalDofs,
+                                 kps=kpOrg,
+                                 kds=kdOrg,
+                                 maxForces=[maxForce * 0.05] * totalDofs,
+                                 timeStep=timeStep)
 
     #taus=[0]*43
     dofIndex = 7
     for index in range(len(jointIndicesAll)):
       jointIndex = jointIndicesAll[index]
-      if jointDofCounts[index] == 4: ...
+      if jointDofCounts[index] == 4:
         
-        # p.setJointMotorControlMultiDof(
-        #       humanoid5,
-        #     jointIndex,
-        #     p.TORQUE_CONTROL,
-        #     force=[taus[dofIndex + 0], taus[dofIndex + 1], taus[dofIndex + 2]])
-        # p.setJointMotorControlMultiDof(
-        #     humanoid3,
-        #     jointIndex,
-        #     p.TORQUE_CONTROL,
-        #     force=[taus3[dofIndex + 0], taus3[dofIndex + 1], taus3[dofIndex + 2]])
+        p.setJointMotorControlMultiDof(
+              humanoid5,
+            jointIndex,
+            p.TORQUE_CONTROL,
+            force=[taus[dofIndex + 0], taus[dofIndex + 1], taus[dofIndex + 2]])
+        p.setJointMotorControlMultiDof(
+            humanoid3,
+            jointIndex,
+            p.TORQUE_CONTROL,
+            force=[taus3[dofIndex + 0], taus3[dofIndex + 1], taus3[dofIndex + 2]])
 
-      if jointDofCounts[index] == 1: ...
+      if jointDofCounts[index] == 1:
 
         
-        # p.setJointMotorControlMultiDof(humanoid5,
-        #                                jointIndex,
-        #                                controlMode=p.TORQUE_CONTROL,
-        #                                force=[taus[dofIndex]])
-        # p.setJointMotorControlMultiDof(humanoid3,
-        #                                jointIndex,
-        #                                controlMode=p.TORQUE_CONTROL,
-        #                                force=[taus3[dofIndex]])
+        p.setJointMotorControlMultiDof(humanoid5,
+                                       jointIndex,
+                                       controlMode=p.TORQUE_CONTROL,
+                                       force=[taus[dofIndex]])
+        p.setJointMotorControlMultiDof(humanoid3,
+                                       jointIndex,
+                                       controlMode=p.TORQUE_CONTROL,
+                                       force=[taus3[dofIndex]])
 
       dofIndex += jointDofCounts[index]
 
     #print("len(taus)=",len(taus))
     #print("taus=",taus)
 
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  chest,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=chestRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  neck,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=neckRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  rightHip,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=rightHipRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  rightKnee,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=rightKneeRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  rightAnkle,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=rightAnkleRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  rightShoulder,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=rightShoulderRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  rightElbow,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=rightElbowRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  leftHip,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=leftHipRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  leftKnee,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=leftKneeRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  leftAnkle,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=leftAnkleRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  leftShoulder,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=leftShoulderRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
-#   p.setJointMotorControlMultiDof(humanoid2,
-#                                  leftElbow,
-#                                  p.POSITION_CONTROL,
-#                                  targetPosition=leftElbowRot,
-#                                  positionGain=kp,
-#                                  force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 chest,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=chestRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 neck,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=neckRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 rightHip,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=rightHipRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 rightKnee,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=rightKneeRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 rightAnkle,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=rightAnkleRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 rightShoulder,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=rightShoulderRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 rightElbow,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=rightElbowRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 leftHip,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=leftHipRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 leftKnee,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=leftKneeRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 leftAnkle,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=leftAnkleRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 leftShoulder,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=leftShoulderRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
+  p.setJointMotorControlMultiDof(humanoid2,
+                                 leftElbow,
+                                 p.POSITION_CONTROL,
+                                 targetPosition=leftElbowRot,
+                                 positionGain=kp,
+                                 force=[maxForce])
 
-  kinematicHumanoid4 = True
-  if (kinematicHumanoid4): ...
-    # p.resetJointStateMultiDof(humanoid4, chest, chestRot)
-    # p.resetJointStateMultiDof(humanoid4, neck, neckRot)
-    # p.resetJointStateMultiDof(humanoid4, rightHip, rightHipRot)
-    # p.resetJointStateMultiDof(humanoid4, rightKnee, rightKneeRot)
-    # p.resetJointStateMultiDof(humanoid4, rightAnkle, rightAnkleRot)
-    # p.resetJointStateMultiDof(humanoid4, rightShoulder, rightShoulderRot)
-    # p.resetJointStateMultiDof(humanoid4, rightElbow, rightElbowRot)
-    # p.resetJointStateMultiDof(humanoid4, leftHip, leftHipRot)
-    # p.resetJointStateMultiDof(humanoid4, leftKnee, leftKneeRot)
-    # p.resetJointStateMultiDof(humanoid4, leftAnkle, leftAnkleRot)
-    # p.resetJointStateMultiDof(humanoid4, leftShoulder, leftShoulderRot)
-    # p.resetJointStateMultiDof(humanoid4, leftElbow, leftElbowRot)
+
+
+  # if (kinematicHumanoid4):
+  #   p.resetJointStateMultiDof(humanoid4, chest, chestRot)
+  #   p.resetJointStateMultiDof(humanoid4, neck, neckRot)
+  #   p.resetJointStateMultiDof(humanoid4, rightHip, rightHipRot)
+  #   p.resetJointStateMultiDof(humanoid4, rightKnee, rightKneeRot)
+  #   p.resetJointStateMultiDof(humanoid4, rightAnkle, rightAnkleRot)
+  #   p.resetJointStateMultiDof(humanoid4, rightShoulder, rightShoulderRot)
+  #   p.resetJointStateMultiDof(humanoid4, rightElbow, rightElbowRot)
+  #   p.resetJointStateMultiDof(humanoid4, leftHip, leftHipRot)
+  #   p.resetJointStateMultiDof(humanoid4, leftKnee, leftKneeRot)
+  #   p.resetJointStateMultiDof(humanoid4, leftAnkle, leftAnkleRot)
+  #   p.resetJointStateMultiDof(humanoid4, leftShoulder, leftShoulderRot)
+  #   p.resetJointStateMultiDof(humanoid4, leftElbow, leftElbowRot)
+  # p.stepSimulation()
+
+  humanoidl = [humanoid,humanoid2,humanoid3,humanoid4,humanoid5]
+  for humanoidt in humanoidl:
+    p.resetJointStateMultiDof(humanoidt, chest, chestRot)
+    p.resetJointStateMultiDof(humanoidt, neck, neckRot)
+    p.resetJointStateMultiDof(humanoidt, rightHip, rightHipRot)
+    p.resetJointStateMultiDof(humanoidt, rightKnee, rightKneeRot)
+    p.resetJointStateMultiDof(humanoidt, rightAnkle, rightAnkleRot)
+    p.resetJointStateMultiDof(humanoidt, rightShoulder, rightShoulderRot)
+    p.resetJointStateMultiDof(humanoidt, rightElbow, rightElbowRot)
+    p.resetJointStateMultiDof(humanoidt, leftHip, leftHipRot)
+    p.resetJointStateMultiDof(humanoidt, leftKnee, leftKneeRot)
+    p.resetJointStateMultiDof(humanoidt, leftAnkle, leftAnkleRot)
+    p.resetJointStateMultiDof(humanoidt, leftShoulder, leftShoulderRot)
+    p.resetJointStateMultiDof(humanoidt, leftElbow, leftElbowRot)
   p.stepSimulation()
 
-#   if showJointMotorTorques:
-#     for j in range(p.getNumJoints(humanoid2)):
-#       jointState = p.getJointStateMultiDof(humanoid2, j)
-#       print("jointStateMultiDof[", j, "].pos=", jointState[0])
-#       print("jointStateMultiDof[", j, "].vel=", jointState[1])
-#       print("jointStateMultiDof[", j, "].jointForces=", jointState[3])
-#   time.sleep(timeStep)
+
+
+  if showJointMotorTorques:
+    for j in range(p.getNumJoints(humanoid2)):
+      jointState = p.getJointStateMultiDof(humanoid2, j)
+      print("jointStateMultiDof[", j, "].pos=", jointState[0])
+      print("jointStateMultiDof[", j, "].vel=", jointState[1])
+      print("jointStateMultiDof[", j, "].jointForces=", jointState[3])
+  time.sleep(timeStep)

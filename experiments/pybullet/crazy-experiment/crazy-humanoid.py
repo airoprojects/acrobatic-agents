@@ -14,7 +14,7 @@ pybullet_client = bullet_client.BulletClient(connection_mode=p1.GUI)
 
 pybullet_client.setAdditionalSearchPath(pybullet_data.getDataPath())
 z2y = pybullet_client.getQuaternionFromEuler([-math.pi * 0.5, 0, 0])
-#planeId = pybullet_client.loadURDF("plane.urdf",[0,0,0],z2y)
+# planeId = pybullet_client.loadURDF("plane.urdf",[0,0,0],z2y)
 planeId = pybullet_client.loadURDF("plane_implicit.urdf", [0, 0, 0],
                                    z2y,
                                    useMaximalCoordinates=True)
@@ -22,7 +22,7 @@ pybullet_client.changeDynamics(planeId, linkIndex=-1, lateralFriction=0.9)
 #print("planeId=",planeId)
 
 pybullet_client.configureDebugVisualizer(pybullet_client.COV_ENABLE_Y_AXIS_UP, 1)
-pybullet_client.setGravity(0, -9.8, 0)
+pybullet_client.setGravity(0,  9.81,70)
 
 pybullet_client.setPhysicsEngineParameter(numSolverIterations=10)
 ### -------------------------- ### 
@@ -31,10 +31,10 @@ pybullet_client.setPhysicsEngineParameter(numSolverIterations=10)
 ### -------------------------- ### 
 mocapData = motion_capture_data.MotionCaptureData()
 #motionPath = pybullet_data.getDataPath()+"/data/motions/humanoid3d_walk.txt"
-motionPath = pybullet_data.getDataPath() + "/data/motions/humanoid3d_spinkick.new.txt"
+motionPath = pybullet_data.getDataPath() + "/data/motions/humanoid3d_spinkick.txt"
 mocapData.Load(motionPath)
 timeStep = 1. / 600
-useFixedBase = False
+useFixedBase = False 
 humanoid = humanoid_stable_pd.HumanoidStablePD(pybullet_client, mocapData, timeStep, useFixedBase)
 isInitialized = True
 ### -------------------------- ### 
@@ -77,17 +77,31 @@ while (1):
       humanoid.setSimTime(t)
 
       humanoid.computePose(humanoid._frameFraction)
-      pose = humanoid._poseInterpolator
-      #humanoid.initializePose(pose=pose, phys_model = humanoid._sim_model, initBase=True, initializeVelocity=True)
-      #humanoid.resetPose()
 
-      desiredPose = humanoid.computePose(humanoid._frameFraction)
+      pose = humanoid._poseInterpolator
+      humanoid.initializePose(pose=pose, phys_model = humanoid._sim_model, initBase=True, initializeVelocity=True) #fa il salto ma non funziona l'omino
+      humanoid.resetPose() # l'omino grigio funziona
+
+      desiredPose = humanoid.computePose(humanoid._frameFraction) # return
       
-      #desiredPose = desiredPose.GetPose()
-      #curPose = HumanoidPoseInterpolator()
-      #curPose.reset()
+      # insieme = set()
+      # for elem in desiredPose:
+      #   insieme.add(type(elem))
+      
+      # print(len(desiredPose))
+      # print('ciaoooooooooo',insieme)
+        
+      
+      # desiredPose = desiredPose.GetPose()
+      # curPose = HumanoidPoseInterpolator()
+      # curPose.reset()
+
+      curPose = humanoid_pose_interpolator.HumanoidPoseInterpolator
+      curPose.Reset
       
       s = humanoid.getState()
+
+      # print(f'state -> {s}')
       #np.savetxt("pb_record_state_s.csv", s, delimiter=",")
       maxForces = [
           0, 0, 0, 0, 0, 0, 0, 200, 200, 200, 200, 50, 50, 50, 50, 200, 200, 200, 200, 150, 90, 90,
