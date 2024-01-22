@@ -4,10 +4,16 @@ gitpython
 
 # pybullet
 pybullet
+mpi4py
 
 # mujoco 
-gymnasium[mujoco] 
+# gymnasium[mujoco] 
 pyquaternion
 
 # stable baseline
-stable-baselines3[extra]
+# stable-baselines3[extra]
+
+
+
+
+

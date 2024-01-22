@@ -4,7 +4,7 @@ RL - Sapienza (AIRO) 2023/2024 -  Bruno Francesco Nocera, Leonardo Colosi
 
 ## Environment Setup 
 ```code
-conda create --name hum_rl python=3.8
+conda create --name hum_rl python=3.7
 ```
 
 Install pytorch from the official [website](https://pytorch.org/get-started/locally/). Make sure to select the right version according to your system characteristics!
@@ -29,6 +29,16 @@ pip install -r requirements.txt --no-cache-dir
 conda install -c conda-forge libstdcxx-ng
 ```
 
+###
+conda install -c conda-forge mpi4py mpich
+###
+
+
+#### protobuf downgrade needed
+```
+pip install protobuf==3.20.*
+```
+
 #### Error with new gym registry:
 ```code 
 File "train.py", line 318, in <module>
@@ -46,3 +56,5 @@ The code should just need to be changed to if env_id not in `gym.envs.registry`
 
 ## Useful resources
 To explore some resources used/related to the project look here [resources](resources)
+
+
