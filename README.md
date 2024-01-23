@@ -11,16 +11,10 @@ Install pytorch from the official [website](https://pytorch.org/get-started/loca
 
 Install old version of gym (?)
 ```code
-git clone https://github.com/openai/gym.git
-cd gym
-pip install -e .
+git clone https://github.com/openai/gym.git ~/git || (cd ~/git ; git pull)
+pip install -e ~/git
 ```
 
-Install other requirements
-
-``` code
-pip install -r requirements.txt --no-cache-dir
-``` 
 
 ## Some quick fixes
 
@@ -29,15 +23,23 @@ pip install -r requirements.txt --no-cache-dir
 conda install -c conda-forge libstdcxx-ng
 ```
 
-###
+#### To solve mpi4py
+```code
 conda install -c conda-forge mpi4py mpich
-###
-
+```
 
 #### protobuf downgrade needed
-```
+```code
 pip install protobuf==3.20.*
 ```
+
+## Install other requirements
+
+``` code
+pip install -r requirements.txt --no-cache-dir
+``` 
+
+## Library incompatibility
 
 #### Error with new gym registry:
 ```code 

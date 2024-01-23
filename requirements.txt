@@ -8,12 +8,12 @@ mpi4py
 
 # mujoco 
 # gymnasium[mujoco] 
-pyquaternion
+# pyquaternion
 
 # stable baseline
 # stable-baselines3[extra]
 
-tensorflow-gpu==1.14
+tensorflow==1.14
 
 
 

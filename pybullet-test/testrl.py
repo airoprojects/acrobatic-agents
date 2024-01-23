@@ -40,6 +40,7 @@ def update_world(world, time_elapsed):
     steps = 0
     world.end_episode()
     world.reset()
+
   return
 
 
@@ -62,6 +63,7 @@ args = sys.argv[1:]
 
 
 def build_world(args, enable_draw):
+
   arg_parser = build_arg_parser(args)
   print("enable_draw=", enable_draw)
   env = PyBulletDeepMimicEnv(arg_parser, enable_draw)
@@ -89,6 +91,7 @@ def build_world(args, enable_draw):
 
     agent.set_enable_training(False)
     world.reset()
+    
   return world
 
 
