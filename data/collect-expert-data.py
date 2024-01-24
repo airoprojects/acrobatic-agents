@@ -1,20 +1,18 @@
-import time
 import os
-import inspect
-# currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-# parentdir = os.path.dirname(os.path.dirname(currentdir))
-# os.sys.path.insert(0, parentdir)
-# print("parentdir=", parentdir)
+import sys
+import time
 import json
-from pybullet_envs.deep_mimic.learning.rl_world import RLWorld
-from pybullet_envs.deep_mimic.learning.ppo_agent import PPOAgent
+import inspect
 
 import pybullet_data
-from pybullet_utils.arg_parser import ArgParser
 from pybullet_utils.logger import Logger
+from pybullet_utils.arg_parser import ArgParser
+from pybullet_envs.deep_mimic.learning.rl_world import RLWorld
+from pybullet_envs.deep_mimic.learning.ppo_agent import PPOAgent
 from pybullet_envs.deep_mimic.env.pybullet_deep_mimic_env import PyBulletDeepMimicEnv
-import sys
+
 import random
+import numpy as np
 
 update_timestep = 1. / 240.
 animating = True
@@ -24,7 +22,7 @@ steps = 0
 
 def update_world(world, time_elapsed):
   timeStep = update_timestep
-  world.update(timeStep)
+  s, a = world.update(timeStep)
   reward = world.env.calc_reward(agent_id=0)
   global total_reward
   total_reward += reward
@@ -41,8 +39,7 @@ def update_world(world, time_elapsed):
     world.end_episode()
     world.reset()
 
-  return
-
+  return s, a
 
 def build_arg_parser(args):
   arg_parser = ArgParser()
@@ -58,9 +55,7 @@ def build_arg_parser(args):
     assert succ, Logger.print2('Failed to load args from: ' + arg_file)
   return arg_parser
 
-
 args = sys.argv[1:]
-
 
 def build_world(args, enable_draw):
 
@@ -94,8 +89,16 @@ def build_world(args, enable_draw):
     
   return world
 
-
 if __name__ == '__main__':
+
+  actions = []
+  observations = []
+  step_counter = 0
+
+  num_interactions = 4000
+
+  observations = np.empty((num_interactions,) + (196,))
+  actions = np.empty((num_interactions,) + (36,))
 
   world = build_world(args, True)
   while (world.env._pybullet_client.isConnected()):
@@ -106,8 +109,29 @@ if __name__ == '__main__':
 
     if world.env.isKeyTriggered(keys, ' '):
       animating = not animating
+   
     if world.env.isKeyTriggered(keys, 'i'):
       step = True
+   
     if (animating or step):
-      update_world(world, timeStep)
+      s, a = update_world(world, timeStep)
       step = False
+
+      if step_counter >= num_interactions: break
+      
+      if not (s is None and a is None):
+        actions[step_counter] = a
+        observations[step_counter] = s[:196]
+
+      step_counter += 1
+
+
+
+  # observations = np.asarray(observations, dtype=object)
+  # actions = np.asarray(actions, dtype=object)
+  
+  currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+
+  np.save(currentdir+'/expert-observations', observations) 
+  np.save(currentdir+'/expert-actions', actions) 
+
