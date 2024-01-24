@@ -114,7 +114,7 @@ if __name__ == '__main__':
       step = True
    
     if (animating or step):
-      s, a = update_world(world, timeStep)
+      s, a = update_world(world, timeStep) #this is modded
       step = False
 
       if step_counter >= num_interactions: break
