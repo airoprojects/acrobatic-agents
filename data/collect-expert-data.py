@@ -120,8 +120,11 @@ if __name__ == '__main__':
       if step_counter >= num_interactions: break
       
       if not (s is None and a is None):
-        actions[step_counter] = a
-        observations[step_counter] = s[:196]
+        if not np.isfinite(a).all():
+          continue
+        else:
+            actions[step_counter] = a
+            observations[step_counter] = s[:196]
 
       step_counter += 1
 
