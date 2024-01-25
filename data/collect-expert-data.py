@@ -94,8 +94,9 @@ if __name__ == '__main__':
   actions = []
   observations = []
   step_counter = 0
+  conteggio = 0
 
-  num_interactions = 4000
+  num_interactions = 8000
 
   observations = np.empty((num_interactions,) + (196,))
   actions = np.empty((num_interactions,) + (36,))
@@ -120,7 +121,8 @@ if __name__ == '__main__':
       if step_counter >= num_interactions: break
       
       if not (s is None and a is None):
-        if not np.isfinite(a).all():
+        if (a > 1e2).any() or (a > 1e2).any():
+          conteggio +=1
           continue
         else:
             actions[step_counter] = a
@@ -135,6 +137,7 @@ if __name__ == '__main__':
   
   currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
+  print('conteggio',conteggio)
   np.save(currentdir+'/expert-observations', observations) 
   np.save(currentdir+'/expert-actions', actions) 
 
