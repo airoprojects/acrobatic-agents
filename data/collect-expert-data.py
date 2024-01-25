@@ -7,9 +7,27 @@ import inspect
 import pybullet_data
 from pybullet_utils.logger import Logger
 from pybullet_utils.arg_parser import ArgParser
-from pybullet_envs.deep_mimic.learning.rl_world import RLWorld
-from pybullet_envs.deep_mimic.learning.ppo_agent import PPOAgent
-from pybullet_envs.deep_mimic.env.pybullet_deep_mimic_env import PyBulletDeepMimicEnv
+
+# Get the root of the project
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Add the root directory to sys.path if it's not already there
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
+
+print(sys.path)
+
+
+# from pybullet_envs.deep_mimic.learning.rl_world import RLWorld
+# from pybullet_envs.deep_mimic.learning.ppo_agent import PPOAgent
+# from pybullet_envs.deep_mimic.env.pybullet_deep_mimic_env import PyBulletDeepMimicEnv
+
+from deep_mimic.rl_world import RLWorld  
+from deep_mimic.ppo_agent import PPOAgent 
+from deep_mimic.pybullet_deep_mimic_env import PyBulletDeepMimicEnv
+
+# Now you can use RLAgent and RLWorld in your collect-expert-data.py
+
 
 import random
 import numpy as np
@@ -94,7 +112,7 @@ if __name__ == '__main__':
   actions = []
   observations = []
   step_counter = 0
-  conteggio = 0
+  discarded = 0
 
   num_interactions = 8000
 
@@ -122,7 +140,7 @@ if __name__ == '__main__':
       
       if not (s is None and a is None):
         if (a > 1e2).any() or (a > 1e2).any():
-          conteggio +=1
+          discarded +=1
           continue
         else:
             actions[step_counter] = a
@@ -137,7 +155,7 @@ if __name__ == '__main__':
   
   currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
-  print('conteggio',conteggio)
+  print('discarded', discarded)
   np.save(currentdir+'/expert-observations', observations) 
   np.save(currentdir+'/expert-actions', actions) 
 
