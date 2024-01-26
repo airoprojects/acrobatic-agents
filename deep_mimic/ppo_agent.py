@@ -7,6 +7,7 @@ import tensorflow as tf
 
 # from pybullet_envs.deep_mimic.learning.pg_agent import PGAgent
 from deep_mimic.pg_agent import PGAgent
+
 from pybullet_envs.deep_mimic.learning.solvers.mpi_solver import MPISolver
 import pybullet_envs.deep_mimic.learning.tf_util as TFUtil
 import pybullet_envs.deep_mimic.learning.rl_util as RLUtil

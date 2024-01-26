@@ -16,6 +16,7 @@ def build_agent(world, id, file):
 
     if (agent_type == PPOAgent.NAME):
       agent = PPOAgent(world, id, json_data)
+      
     else:
       assert False, 'Unsupported agent type: ' + agent_type
 

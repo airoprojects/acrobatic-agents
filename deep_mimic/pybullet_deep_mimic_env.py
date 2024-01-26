@@ -1,16 +1,22 @@
-import numpy as np
-import math
-from pybullet_envs.deep_mimic.env.env import Env
-from pybullet_envs.deep_mimic.env.action_space import ActionSpace
-from pybullet_utils import bullet_client
+'''
+Note: this code is part of the bullet3 library: (https://github.com/bulletphysics/bullet3/tree/master)
+This script has NOT been modified
+'''
+
 import time
-from pybullet_envs.deep_mimic.env import motion_capture_data
-from pybullet_envs.deep_mimic.env import humanoid_stable_pd
+import math
+import random
+import numpy as np
+from enum import Enum
+
 import pybullet_data
 import pybullet as p1
-import random
+from pybullet_utils import bullet_client
+from pybullet_envs.deep_mimic.env.env import Env
+from pybullet_envs.deep_mimic.env import humanoid_stable_pd
+from pybullet_envs.deep_mimic.env import motion_capture_data
+from pybullet_envs.deep_mimic.env.action_space import ActionSpace
 
-from enum import Enum
 
 class InitializationStrategy(Enum):
   """Set how the environment is initialized."""
