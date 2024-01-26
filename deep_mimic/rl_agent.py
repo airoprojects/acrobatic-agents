@@ -364,6 +364,7 @@ class RLAgent(ABC):
     if override:
       policy = copy.deepcopy(override)
       a = policy(s)
+      log = None
     else:
       a, logp = self._decide_action(s=s, g=g)
     
