@@ -9,7 +9,7 @@ conda create --name hum_rl python=3.7
 
 Install pytorch from the official [website](https://pytorch.org/get-started/locally/). Make sure to select the right version according to your system characteristics!
 
-Install old version of gym (?)
+## Install old version of gym
 ```code
 git clone https://github.com/openai/gym.git ~/git || (cd ~/git ; git pull)
 pip install -e ~/git

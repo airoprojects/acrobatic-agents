@@ -33,8 +33,9 @@ class BCAgent(nn.Module):
     out = self.fc2(out)
     return out
   
-  def load_parameters(self, dir): 
-    if exists(dir+self.name.lower()+'.pt'):
+  def load_parameters(self, dir):
+    # if exists(dir+self.name.lower()+'.pt'): 
+    if exists(dir+self.name.lower()+'new'+'.pt'):
         print("Loading model "+self.name+" state parameters")
         self.load_state_dict(torch.load(dir+self.name.lower()+'.pt', map_location=self.device))
         return self
