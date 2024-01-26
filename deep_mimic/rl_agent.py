@@ -142,7 +142,7 @@ class RLAgent(ABC):
 
   def update(self, timestep, override=False):
     s, a = None, None
-    print(f'override -> {override.name}')
+    # print(f'override -> {override.name}')
     
     if self.need_new_action():
       #print("update_new_action!!!")
@@ -366,7 +366,7 @@ class RLAgent(ABC):
     # override action selection by activating the cloning agent:
     print(f'override -> {override.name}')
     if override:
-      print('OVERRIDE MODEEEE')
+      # print('OVERRIDE MODEEEE')
       policy = copy.deepcopy(override)
       obs = torch.from_numpy(s[:196]).float().unsqueeze(0) # [1,196]
       a = policy(obs).squeeze().detach().numpy() 

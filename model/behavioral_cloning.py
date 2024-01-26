@@ -15,7 +15,9 @@ class BCAgent(nn.Module):
 
   def __init__(self, obs_space, action_space) -> None:
     super(BCAgent,self).__init__()
+
     self.name = 'Behavioral-Cloning-Agent'
+    self.device = device
 
     self.n_inputs = obs_space
     self.n_outputs = action_space
@@ -33,11 +35,12 @@ class BCAgent(nn.Module):
     out = self.fc2(out)
     return out
   
-  def load_parameters(self, dir):
+  def load_parameters(self, src):
     # if exists(dir+self.name.lower()+'.pt'): 
-    if exists(dir+self.name.lower()+'new'+'.pt'):
+    if exists(src):
         print("Loading model "+self.name+" state parameters")
-        self.load_state_dict(torch.load(dir+self.name.lower()+'.pt', map_location=self.device))
+        print("From :{}".format(src))
+        self.load_state_dict(torch.load(src, map_location=self.device))
         return self
     else:
         print("Error no model "+self.name.lower()+" found!")

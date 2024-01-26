@@ -3,7 +3,7 @@ import sys
 import time
 import json
 import inspect
-
+from git import Repo
 import pybullet_data
 from pybullet_utils.logger import Logger
 from pybullet_utils.arg_parser import ArgParser
@@ -16,6 +16,10 @@ if parent_dir not in sys.path:
     sys.path.insert(0, parent_dir)
 
 print(sys.path)
+
+repo = Repo(".", search_parent_directories=True)
+root_dir = repo.git.rev_parse("--show-toplevel")
+print("root: {}".format(root_dir))
 
 
 # from pybullet_envs.deep_mimic.learning.rl_world import RLWorld

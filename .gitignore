@@ -168,4 +168,4 @@ datasets
 old
 
 # model checpoints 
-*.pt
+# *.pt
