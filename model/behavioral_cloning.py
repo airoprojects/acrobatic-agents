@@ -14,13 +14,14 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 class BCAgent(nn.Module):
 
   def __init__(self, obs_space, action_space) -> None:
+    super(BCAgent,self).__init__()
     self.name = 'Behavioral-Cloning-Agent'
 
     self.n_inputs = obs_space
     self.n_outputs = action_space
 
     # Policy Network
-    self.fc1 = nn.Linear(self.n_inputs)
+    self.fc1 = nn.Linear(self.n_inputs,16)
     self.bn1 = nn.BatchNorm1d(16)
     self.relu = nn.ReLU()
     self.fc2 = nn.Linear(16, self.n_outputs)

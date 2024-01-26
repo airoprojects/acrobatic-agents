@@ -105,6 +105,7 @@ class RLWorld(object):
 
   def update(self, timestep, override=False):
     #print("world update!\n")
+    print(f'3 override -> {override.name}')
     s, a = self._update_agents(timestep, override=override)
     # self._update_agents(timestep)
     self._update_env(timestep)
@@ -125,9 +126,12 @@ class RLWorld(object):
 
   def _update_agents(self, timestep, override=False):
     #print("len(agents)=",len(self.agents))
+    print(f'override -> {override.name}')
+    
+
     for agent in self.agents:
       if (agent is not None):
-        s, a = agent.update(timestep)
+        s, a = agent.update(timestep,override)
     return s, a
 
   def _reset_env(self):

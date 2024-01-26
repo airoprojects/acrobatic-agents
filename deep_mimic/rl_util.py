@@ -40,6 +40,7 @@ args = sys.argv[1:]
 
 
 def update_world(world, time_elapsed, update_timestep, override=False):
+  print(f'override -> {override.name}')
   timeStep = update_timestep
   s, a = world.update(timeStep, override=override)
 

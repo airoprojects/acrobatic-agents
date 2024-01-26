@@ -19,6 +19,9 @@ if __name__ == '__main__':
   observations = []
 
   world = dm.build_world(args, True)
+
+  policy = BCAgent(196,36).eval()
+
   while (world.env._pybullet_client.isConnected()):
 
     timeStep = update_timestep
@@ -32,5 +35,5 @@ if __name__ == '__main__':
       step = True
    
     if (animating or step):
-      s, a = dm.update_world(world, timeStep, update_timestep, override=False) 
+      s, a = dm.update_world(world, timeStep, update_timestep, override=policy) 
       step = False

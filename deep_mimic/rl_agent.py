@@ -7,6 +7,7 @@ This script HAS been modified:
 '''
 
 import numpy as np
+import torch
 import copy
 import os
 import time
@@ -141,6 +142,8 @@ class RLAgent(ABC):
 
   def update(self, timestep, override=False):
     s, a = None, None
+    print(f'override -> {override.name}')
+    
     if self.need_new_action():
       #print("update_new_action!!!")
       s, a = self._update_new_action(override=override)
@@ -349,7 +352,7 @@ class RLAgent(ABC):
     return
 
   def _update_new_action(self, override=False):
-
+    
     #print("_update_new_action!")
     s = self._record_state()
     #np.savetxt("pb_record_state_s.csv", s, delimiter=",")
@@ -361,12 +364,16 @@ class RLAgent(ABC):
 
     # MAJOR CHANGE:
     # override action selection by activating the cloning agent:
+    print(f'override -> {override.name}')
     if override:
+      print('OVERRIDE MODEEEE')
       policy = copy.deepcopy(override)
-      a = policy(s)
-      log = None
+      obs = torch.from_numpy(s[:196]).float().unsqueeze(0) # [1,196]
+      a = policy(obs).squeeze().detach().numpy() 
+      logp = None
     else:
       a, logp = self._decide_action(s=s, g=g)
+      print('ciaooooooo ci avevi creduto ehhh')
     
 
     assert len(np.shape(a)) == 1
