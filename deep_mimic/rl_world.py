@@ -1,9 +1,11 @@
 import numpy as np
-import pybullet_envs.deep_mimic.learning.agent_builder as AgentBuilder
+import deep_mimic.agent_builder as AgentBuilder
 import pybullet_envs.deep_mimic.learning.tf_util as TFUtil
-from pybullet_envs.deep_mimic.learning.rl_agent import RLAgent
+# from pybullet_envs.deep_mimic.learning.rl_agent import RLAgent
+from deep_mimic.rl_agent import RLAgent
 from pybullet_utils.logger import Logger
 import pybullet_data
+
 
 
 class RLWorld(object):
@@ -91,10 +93,9 @@ class RLWorld(object):
 
     return
 
-  def update(self, timestep):
+  def update(self, timestep, override=False):
     #print("world update!\n")
-    
-    s, a = self._update_agents(timestep)
+    s, a = self._update_agents(timestep, override=override)
     # self._update_agents(timestep)
     self._update_env(timestep)
     return s, a
@@ -112,7 +113,7 @@ class RLWorld(object):
     self.env.update(timestep)
     return
 
-  def _update_agents(self, timestep):
+  def _update_agents(self, timestep, override=False):
     #print("len(agents)=",len(self.agents))
     for agent in self.agents:
       if (agent is not None):

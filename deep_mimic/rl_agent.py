@@ -131,11 +131,11 @@ class RLAgent(ABC):
     self.path.clear()
     return
 
-  def update(self, timestep):
+  def update(self, timestep, override=False):
     s, a = None, None
     if self.need_new_action():
       #print("update_new_action!!!")
-      s, a = self._update_new_action()
+      s, a = self._update_new_action(override=override)
 
     if (self._mode == self.Mode.TRAIN and self.enable_training):
       self._update_counter += timestep
@@ -340,7 +340,7 @@ class RLAgent(ABC):
 
     return
 
-  def _update_new_action(self):
+  def _update_new_action(self, override=False):
 
     #print("_update_new_action!")
     s = self._record_state()
@@ -351,7 +351,15 @@ class RLAgent(ABC):
       r = self._record_reward()
       self.path.rewards.append(r)
 
-    a, logp = self._decide_action(s=s, g=g)
+    # MAJOR CHANGE:
+    # override action selection by activating the cloning agent:
+    if override:
+      policy = copy.deepcopy(override)
+      a = policy(s)
+    else:
+      a, logp = self._decide_action(s=s, g=g)
+    
+
     assert len(np.shape(a)) == 1
     assert len(np.shape(logp)) <= 1
 

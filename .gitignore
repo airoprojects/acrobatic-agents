@@ -166,3 +166,6 @@ datasets
 
 # old code 
 old
+
+# model checpoints 
+*.pt
