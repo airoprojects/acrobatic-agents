@@ -1,6 +1,6 @@
 '''
 Note: this code is part of the bullet3 library: (https://github.com/bulletphysics/bullet3/tree/master)
-This script has NOT been modified
+This script has NOT been modified --> !!! Perhaps it is safe to remove it from here !!!
 '''
 
 import time

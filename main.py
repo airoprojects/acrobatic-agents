@@ -3,12 +3,7 @@ import time
 
 import numpy as np 
 
-print(sys.path)
-
-# from deep_mimic import build_world,  update_world
-
 import deep_mimic.rl_util as dm
-
 from model import BCAgent
 
 if __name__ == '__main__':

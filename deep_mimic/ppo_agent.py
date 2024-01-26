@@ -1,13 +1,17 @@
+'''
+Note: this code is part of the bullet3 library: (https://github.com/bulletphysics/bullet3/tree/master)
+This script HAS been modified:
+  1. Imported custom PG Agent 
+'''
+
 import numpy as np
 import copy as copy
-# try:
-#   import tensorflow.compat.v1 as tf
-# except Exception:
 import tensorflow as tf
 
-# from pybullet_envs.deep_mimic.learning.pg_agent import PGAgent
+# import custom pg agent
 from deep_mimic.pg_agent import PGAgent
 
+# from pybullet_envs.deep_mimic.learning.pg_agent import PGAgent
 from pybullet_envs.deep_mimic.learning.solvers.mpi_solver import MPISolver
 import pybullet_envs.deep_mimic.learning.tf_util as TFUtil
 import pybullet_envs.deep_mimic.learning.rl_util as RLUtil

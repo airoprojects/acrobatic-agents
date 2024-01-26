@@ -1,11 +1,21 @@
+'''
+Note: this code is part of the bullet3 library: (https://github.com/bulletphysics/bullet3/tree/master)
+This script HAS been modified:
+  1. Imported custom RL Agent
+  2. Now the function: update(self, timestep) has a new signature: update(self, timestep, override=False) 
+  3. Now the function: _update_agents(self, timestep) has a new signature: _update_agents(self, timestep, override=False)
+'''
+
 import numpy as np
+
+# import custom rl agent 
+from deep_mimic.rl_agent import RLAgent
+
+# from pybullet_envs.deep_mimic.learning.rl_agent import RLAgent
 import deep_mimic.agent_builder as AgentBuilder
 import pybullet_envs.deep_mimic.learning.tf_util as TFUtil
-# from pybullet_envs.deep_mimic.learning.rl_agent import RLAgent
-from deep_mimic.rl_agent import RLAgent
 from pybullet_utils.logger import Logger
 import pybullet_data
-
 
 
 class RLWorld(object):

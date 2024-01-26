@@ -1,9 +1,17 @@
+'''
+Note: this code is part of the bullet3 library: (https://github.com/bulletphysics/bullet3/tree/master)
+This script HAS been modified:
+  1. Imported custom RL Agent
+'''
+
 import numpy as np
 import tensorflow as tf
 from abc import abstractmethod
 
-# from pybullet_envs.deep_mimic.learning.rl_agent import RLAgent
+# import custom rl agent
 from deep_mimic.rl_agent import RLAgent
+
+# from pybullet_envs.deep_mimic.learning.rl_agent import RLAgent
 from pybullet_utils.logger import Logger
 from pybullet_envs.deep_mimic.learning.tf_normalizer import TFNormalizer
 

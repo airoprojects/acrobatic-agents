@@ -1,13 +1,17 @@
-import numpy as np
-# try:
-#   import tensorflow.compat.v1 as tf
-# except Exception:
-import tensorflow as tf
+'''
+Note: this code is part of the bullet3 library: (https://github.com/bulletphysics/bullet3/tree/master)
+This script HAS been modified:
+  1. Imported custom TF Agent
+'''
 
 import copy
+import numpy as np
+import tensorflow as tf
+
+# import custom tf agent
+from deep_mimic.tf_agent import TFAgent
 
 # from pybullet_envs.deep_mimic.learning.tf_agent import TFAgent
-from deep_mimic.tf_agent import TFAgent
 from pybullet_envs.deep_mimic.learning.solvers.mpi_solver import MPISolver
 import pybullet_envs.deep_mimic.learning.tf_util as TFUtil
 import pybullet_envs.deep_mimic.learning.nets.net_builder as NetBuilder

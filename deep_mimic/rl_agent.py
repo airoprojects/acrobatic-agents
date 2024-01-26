@@ -1,3 +1,11 @@
+'''
+Note: this code is part of the bullet3 library: (https://github.com/bulletphysics/bullet3/tree/master)
+This script HAS been modified:
+  1. Now the function: update(self, timestep) has a new signature: update(self, timestep, override=False) 
+  2. Now the function: _update_new_action(self): has a new signature: _update_new_action(self, override=False)
+     It is now possible to use it to choose the action by a IL policy
+'''
+
 import numpy as np
 import copy
 import os

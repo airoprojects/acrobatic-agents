@@ -1,3 +1,12 @@
+'''
+Note: this code is part of the bullet3 library: (https://github.com/bulletphysics/bullet3/tree/master)
+This script HAS been modified:
+  1. Added 3 new function to be used to run a simulation:
+      - update update_world(world, time_elapsed, update_timestep, override=False)
+      - build_arg_parser(args)
+      - build_world(args, enable_draw)
+  2. Note: the global variable SHOULD be removed form here (but is a minor issue to resolve later)
+'''
 
 import numpy as np
 

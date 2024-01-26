@@ -1,7 +1,16 @@
+'''
+Note: this code is part of the bullet3 library: (https://github.com/bulletphysics/bullet3/tree/master)
+This script HAS been modified:
+  1. Imported custom PPO Agent
+'''
+
+
 import json
 import numpy as np
-from deep_mimic.ppo_agent import PPOAgent
 import pybullet_data
+
+# import custom ppo agent
+from deep_mimic.ppo_agent import PPOAgent
 
 AGENT_TYPE_KEY = "AgentType"
 
