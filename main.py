@@ -37,6 +37,8 @@ if __name__ == '__main__':
   src = root_dir+'/checkpoints/'+policy.name.lower()+'.pt'
   policy.load_parameters(src)
   
+  min_val = -55.37797546386719
+  max_val = 52.21531295776367
 
   while (world.env._pybullet_client.isConnected()):
 
@@ -51,5 +53,5 @@ if __name__ == '__main__':
       step = True
    
     if (animating or step):
-      s, a = dm.update_world(world, timeStep, override=policy) 
+      s, a = dm.update_world(world, timeStep, override=(policy, min_val, min_val)) 
       step = False

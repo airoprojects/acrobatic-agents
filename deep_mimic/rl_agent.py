@@ -103,8 +103,12 @@ class RLAgent(ABC):
     self._build_bounds()
     self.reset()
 
-    self.expert_actions = []
-    self.expert_obs = []
+    # custom attributes
+    self.expert_actions = [] # legacy
+    self.expert_obs = []  # legacy
+    # self.count_obs = 0  # legacy
+    self.min_val = None
+    self.max_val = None
 
     return
 
@@ -369,15 +373,21 @@ class RLAgent(ABC):
     if override:
       # print('OVERRIDE MODEEEE')
       
-      # testing static normalization:
-      min_val = -55.37797546386719
-      max_val = 52.21531295776367
-
-      policy = copy.deepcopy(override)
-      obs = torch.from_numpy(s[:196]).float().unsqueeze(0) # [1,196]
-      n_obs = 2 * ((obs - min_val) / (max_val - min_val)) - 1
-      a = override(n_obs).squeeze().detach().cpu().numpy()
+      if not self.min_val and not self.max_val:
+        self.min_val = override[1]
+        self.max_val = override[2]
       
+      policy = copy.deepcopy(override[0])
+      obs = torch.from_numpy(s[:196]).float().unsqueeze(0) # [1,196]
+
+      # update new min max
+      if obs.min() < self.min_val : self.min_val = obs.min()
+      if obs.max() > self.max_val : self.max_val = obs.max()
+
+      # obseravtion normalization
+      n_obs = 2 * ((obs - self.min_val) / (self.max_val - self.min_val)) - 1
+      a = policy(n_obs).squeeze().detach().cpu().numpy()
+
       prova, logp = self._decide_action(s=s, g=g)
 
       print(f'state min -> {s.min()}')
