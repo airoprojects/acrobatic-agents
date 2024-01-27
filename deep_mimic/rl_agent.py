@@ -318,6 +318,7 @@ class RLAgent(ABC):
     return
 
   def _record_state(self):
+    print(f'type(self.world) -> {type(self.world) }')
     s = self.world.env.record_state(self.id)
     return s
 
@@ -367,10 +368,18 @@ class RLAgent(ABC):
     print(f'override -> {override.name}')
     if override:
       # print('OVERRIDE MODEEEE')
+      
       policy = copy.deepcopy(override)
       obs = torch.from_numpy(s[:196]).float().unsqueeze(0) # [1,196]
-      a = policy(obs).squeeze().detach().numpy() 
-      logp = None
+      # a = policy(obs).squeeze().detach().numpy() 
+      a = override(obs).squeeze().detach().cpu().numpy()
+      prova, logp = self._decide_action(s=s, g=g)
+
+      print(f'observation -> {obs}')
+      print(f'nostra action -> {a}')
+      print(f'state -> {s}')
+      print(f'ppo action -> {prova}')
+
     else:
       a, logp = self._decide_action(s=s, g=g)
       print('ciaooooooo ci avevi creduto ehhh')

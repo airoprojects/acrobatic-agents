@@ -18,3 +18,9 @@ else:
   a, logp = self._decide_action(s=s, g=g)
 ```
 
+
+# For action
+
+1. rl_agent -> _apply_action ->
+2. pybullet_deep_mimic_env -> set_action  
+

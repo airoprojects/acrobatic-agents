@@ -21,9 +21,10 @@ import pybullet_data
 class RLWorld(object):
 
   def __init__(self, env, arg_parser):
-    TFUtil.disable_gpu()
+    TFUtil.disable_gpu() # fare attenzione su questo
 
     self.env = env
+    print(f'type(self.env) {type(self.env)}')
     self.arg_parser = arg_parser
     self._enable_training = True
     self.train_agents = []

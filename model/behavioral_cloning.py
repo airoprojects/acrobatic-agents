@@ -9,11 +9,11 @@ from os.path import join, exists
 # from os import mkdir, unlink, listdir, getpid, remove
 
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class BCAgent(nn.Module):
 
-  def __init__(self, obs_space, action_space) -> None:
+  def __init__(self, obs_space, action_space,device = 'cpu') -> None:
     super(BCAgent,self).__init__()
 
     self.name = 'Behavioral-Cloning-Agent'

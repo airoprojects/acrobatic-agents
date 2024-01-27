@@ -10,6 +10,7 @@ import deep_mimic.rl_util as dm
 
 # set up train device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = 'cpu'
 print("device: {}".format(device))
 
 # setup project root dir
@@ -31,10 +32,11 @@ if __name__ == '__main__':
 
   world = dm.build_world(args, True)
 
-  policy = BCAgent(196,36).eval()
+  policy = BCAgent(196,36,device).eval()
 
   src = root_dir+'/checkpoints/'+policy.name.lower()+'.pt'
   policy.load_parameters(src)
+  
 
   while (world.env._pybullet_client.isConnected()):
 
