@@ -39,7 +39,6 @@ if __name__ == '__main__':
   
   
   min_val = -61.59686279296875
-
   max_val = 68.45513916015625
 
   while (world.env._pybullet_client.isConnected()):
