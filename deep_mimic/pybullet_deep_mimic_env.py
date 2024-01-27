@@ -21,7 +21,7 @@ from pybullet_envs.deep_mimic.env.action_space import ActionSpace
 class InitializationStrategy(Enum):
   """Set how the environment is initialized."""
   START = 0
-  RANDOM = 1  # random state initialization (RSI)
+  RANDOM = 0  # random state initialization (RSI) MODDED
 
 
 class PyBulletDeepMimicEnv(Env):
@@ -33,7 +33,7 @@ class PyBulletDeepMimicEnv(Env):
     self._num_agents = 1
     self._pybullet_client = pybullet_client
     self._isInitialized = False
-    self._useStablePD = True
+    self._useStablePD = False #MODDED 
     self._arg_parser = arg_parser
     self.timeStep = time_step
     self._init_strategy = init_strategy
@@ -110,7 +110,7 @@ class PyBulletDeepMimicEnv(Env):
     self._humanoid.resetPose()
     #this clears the contact points. Todo: add API to explicitly clear all contact points?
     #self._pybullet_client.stepSimulation()
-    self._humanoid.resetPose()
+    # self._humanoid.resetPose()
     self.needs_update_time = self.t - 1  #force update
 
   def get_num_agents(self):
@@ -118,6 +118,7 @@ class PyBulletDeepMimicEnv(Env):
 
   def get_action_space(self, agent_id):
     return ActionSpace(ActionSpace.Continuous)
+    # return ActionSpace(ActionSpace.Discrete)
 
   def get_reward_min(self, agent_id):
     return 0

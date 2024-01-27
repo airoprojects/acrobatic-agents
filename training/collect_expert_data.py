@@ -8,6 +8,11 @@ import pybullet_data
 from pybullet_utils.logger import Logger
 from pybullet_utils.arg_parser import ArgParser
 
+# setup project root dir
+repo = Repo(".", search_parent_directories=True)
+root_dir = repo.git.rev_parse("--show-toplevel")
+print("root: {}".format(root_dir))
+
 # Get the root of the project
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -118,7 +123,7 @@ if __name__ == '__main__':
   step_counter = 0
   discarded = 0
 
-  num_interactions = 8000
+  num_interactions = 6000
 
   observations = np.empty((num_interactions,) + (196,))
   actions = np.empty((num_interactions,) + (36,))
@@ -160,6 +165,6 @@ if __name__ == '__main__':
   currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
   print('discarded', discarded)
-  np.save(currentdir+'/expert-observations', observations) 
-  np.save(currentdir+'/expert-actions', actions) 
+  np.save(root_dir+'/data/expert-observations', observations) 
+  np.save(root_dir+'/data/expert-actions', actions) 
 

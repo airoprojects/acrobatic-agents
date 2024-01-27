@@ -322,7 +322,7 @@ class RLAgent(ABC):
     return
 
   def _record_state(self):
-    print(f'type(self.world) -> {type(self.world) }')
+    # print(f'type(self.world) -> {type(self.world) }')
     s = self.world.env.record_state(self.id)
     return s
 
@@ -376,13 +376,23 @@ class RLAgent(ABC):
       if not self.min_val and not self.max_val:
         self.min_val = override[1]
         self.max_val = override[2]
+        print(f'start: {override[1]}')
+        print(f'start: {override[2]}')
+
       
       policy = copy.deepcopy(override[0])
       obs = torch.from_numpy(s[:196]).float().unsqueeze(0) # [1,196]
 
       # update new min max
-      if obs.min() < self.min_val : self.min_val = obs.min()
-      if obs.max() > self.max_val : self.max_val = obs.max()
+
+      # print(f'self.max -> {self.max_val }')
+      # print(f'self.min -> {self.min_val }')
+      if obs.min() < self.min_val : 
+        self.min_val = obs.min()
+        print(f'new min: {self.min_val}')
+      if obs.max() > self.max_val : 
+        self.max_val = obs.max()
+        print(f'new max: {self.max_val}')
 
       # obseravtion normalization
       n_obs = 2 * ((obs - self.min_val) / (self.max_val - self.min_val)) - 1
@@ -390,12 +400,12 @@ class RLAgent(ABC):
 
       prova, logp = self._decide_action(s=s, g=g)
 
-      print(f'state min -> {s.min()}')
-      print(f'state max -> {s.max()}')
-      print(f'ppo action -> {prova}')
-      print(f'observation min -> {obs.min()}')
-      print(f'observation max -> {obs.max()}')
-      print(f'nostra action -> {a}')
+      # print(f'state min -> {s.min()}')
+      # print(f'state max -> {s.max()}')
+      # print(f'ppo action -> {prova}')
+      # print(f'observation min -> {obs.min()}')
+      # print(f'observation max -> {obs.max()}')
+      # print(f'nostra action -> {a}')
 
     else:
       a, logp = self._decide_action(s=s, g=g)
