@@ -365,20 +365,27 @@ class RLAgent(ABC):
 
     # MAJOR CHANGE:
     # override action selection by activating the cloning agent:
-    print(f'override -> {override.name}')
+    # print(f'override -> {override.name}')
     if override:
       # print('OVERRIDE MODEEEE')
       
+      # testing static normalization:
+      min_val = -55.37797546386719
+      max_val = 52.21531295776367
+
       policy = copy.deepcopy(override)
       obs = torch.from_numpy(s[:196]).float().unsqueeze(0) # [1,196]
-      # a = policy(obs).squeeze().detach().numpy() 
-      a = override(obs).squeeze().detach().cpu().numpy()
+      n_obs = 2 * ((obs - min_val) / (max_val - min_val)) - 1
+      a = override(n_obs).squeeze().detach().cpu().numpy()
+      
       prova, logp = self._decide_action(s=s, g=g)
 
-      print(f'observation -> {obs}')
-      print(f'nostra action -> {a}')
-      print(f'state -> {s}')
+      print(f'state min -> {s.min()}')
+      print(f'state max -> {s.max()}')
       print(f'ppo action -> {prova}')
+      print(f'observation min -> {obs.min()}')
+      print(f'observation max -> {obs.max()}')
+      print(f'nostra action -> {a}')
 
     else:
       a, logp = self._decide_action(s=s, g=g)
