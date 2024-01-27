@@ -82,11 +82,11 @@ def build_arg_parser(args):
   return arg_parser
 
 
-def build_world(args, enable_draw):
+def build_world(args, enable_draw, enable_stable_pd):
 
   arg_parser = build_arg_parser(args)
   print("enable_draw=", enable_draw)
-  env = PyBulletDeepMimicEnv(arg_parser, enable_draw)
+  env = PyBulletDeepMimicEnv(arg_parser, enable_draw, enable_stable_pd=enable_stable_pd)
   world = RLWorld(env, arg_parser)
   #world.env.set_playback_speed(playback_speed)
 

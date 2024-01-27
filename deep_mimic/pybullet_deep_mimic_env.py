@@ -28,12 +28,13 @@ class PyBulletDeepMimicEnv(Env):
 
   def __init__(self, arg_parser=None, enable_draw=False, pybullet_client=None,
                time_step=1./240,
+               enable_stable_pd=True, # set to fals for evaluation
                init_strategy=InitializationStrategy.RANDOM):
     super().__init__(arg_parser, enable_draw)
     self._num_agents = 1
     self._pybullet_client = pybullet_client
     self._isInitialized = False
-    self._useStablePD = False #MODDED 
+    self._useStablePD = enable_stable_pd # MODDED; set to True for 
     self._arg_parser = arg_parser
     self.timeStep = time_step
     self._init_strategy = init_strategy

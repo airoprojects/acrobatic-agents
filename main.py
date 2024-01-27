@@ -30,7 +30,7 @@ if __name__ == '__main__':
   actions = []
   observations = []
 
-  world = dm.build_world(args, True)
+  world = dm.build_world(args, True, enable_stable_pd=True)
 
   policy = BCAgent(196,36,device).eval()
 
