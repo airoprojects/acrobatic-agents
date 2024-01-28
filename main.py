@@ -9,6 +9,7 @@ import torch
 import numpy as np 
 
 from models import BCOAgentFC
+from models import BCO_cnn
 import deep_mimic.rl_util as dm
 
 # set up train device
@@ -45,12 +46,14 @@ if __name__ == '__main__':
 
   version = my_args.version if my_args.version else 100
   policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, device=device).eval()
+  policy = BCO_cnn(obs_dim, action_dim).eval()
 
   src = root_dir+'/checkpoints/'
   policy.load_parameters(src, version=version)
+
     
   # scaler
-  scaler_version = 4000
+  scaler_version = 6000
   scaler_path = root_dir+'/data/scaler-'+str(scaler_version)+'.joblib'
   scaler = joblib.load(scaler_path)
   min_val = -61.59686279296875

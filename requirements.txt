@@ -1,5 +1,6 @@
 # general imports
 tqdm
+joblib
 gitpython
 scikit-learn
 

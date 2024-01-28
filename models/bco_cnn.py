@@ -34,17 +34,18 @@ class BCO_cnn(nn.Module):
 
 
     def forward(self, x):
-        print(x.shape)
+        # print(x.shape)
         x = self.conv1(x)
-        print(x.shape)
+        # print(x.shape)
         x = self.conv2(x)
-        print(x.shape)
+        # print(x.shape)
         x = x.view(x.size(0),-1)
-        print(x.shape)
+        # print(x.shape)
         x = self.LRelu(self.fc1(x))
-        print(x.shape)
+        # print(x.shape)
         x = self.fc2(x)
-        print(x.shape)
+        # print(x.shape)
+        return x
 
 
     def load_parameters(self, src, version):

@@ -403,7 +403,8 @@ class RLAgent(ABC):
       n_obs = scaler.transform(s.reshape(1, -1))
       obs = torch.from_numpy(n_obs).float() #.unsqueeze(0) # [1,196]
       
-      print(obs.shape)
+      if policy.name == 'bco-cnn':
+            obs = obs.unsqueeze(1)
 
       # action
       a = policy(obs).squeeze().detach().cpu().numpy()
