@@ -15,12 +15,14 @@ class BCOAgentFC(nn.Module):
   def __init__(self, obs_space, 
                action_space,
                h_size=16,
-               device='cpu'
+               scaler = None,
+               device='cpu',
               ) -> None:
     
     super(BCOAgentFC, self).__init__()
 
     self.name = 'bco-fc'
+    self.scaler = scaler
     self.device = device
 
     self.n_inputs = obs_space
@@ -38,6 +40,13 @@ class BCOAgentFC(nn.Module):
     out = self.relu(out)
     out = self.fc2(out)
     return out
+  
+  def act(self, state):
+    n_obs = self.scaler.transform(state.reshape(1, -1))
+    obs = torch.from_numpy(n_obs).float() #.unsqueeze(0) # [1,196]
+    a = self.forward(obs).squeeze().detach().cpu().numpy()
+    return a
+     
   
   def load_parameters(self, src, version):
     src = src+self.name.lower()+'-'+str(version)+'.pt'

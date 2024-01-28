@@ -15,11 +15,12 @@ import torch.nn.functional as F
 
 class BCO_cnn(nn.Module):
 
-    def __init__(self, obs_space, action_space, h_size=16, device='cpu') -> None:
+    def __init__(self, obs_space, action_space, h_size=16, scaler=None, device='cpu') -> None:
         
         super(BCO_cnn,self).__init__()
 
         self.name = 'bco-cnn'
+        self.scaler = scaler
         self.device = device
 
         self.n_inputs = obs_space
@@ -47,6 +48,12 @@ class BCO_cnn(nn.Module):
         # print(x.shape)
         return x
 
+    def act(self, state):
+        n_obs = self.scaler.transform(state.reshape(1, -1))
+        obs = torch.from_numpy(n_obs).float() #.unsqueeze(0) # [1,196]
+        a = self.forward(obs).squeeze().detach().cpu().numpy()
+        obs = obs.unsqueeze(1)
+        return a
 
     def load_parameters(self, src, version):
         src = src+self.name.lower()+'-'+str(version)+'.pt'

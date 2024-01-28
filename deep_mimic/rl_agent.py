@@ -373,7 +373,7 @@ class RLAgent(ABC):
     if override:
       # print('OVERRIDE MODEEEE')
       
-      policy = copy.deepcopy(override['policy'])
+      # policy = copy.deepcopy(override['policy'])
       
       # # START min/max
       # r_obs = torch.from_numpy(s).float().unsqueeze(0) # [1,196]
@@ -399,15 +399,17 @@ class RLAgent(ABC):
       # END min/max
         
       # robust
-      scaler = override['scaler']
-      n_obs = scaler.transform(s.reshape(1, -1))
-      obs = torch.from_numpy(n_obs).float() #.unsqueeze(0) # [1,196]
+      # scaler = override['scaler']
+      # n_obs = scaler.transform(s.reshape(1, -1))
+      # obs = torch.from_numpy(n_obs).float() #.unsqueeze(0) # [1,196]
       
-      if policy.name == 'bco-cnn':
-            obs = obs.unsqueeze(1)
+      # if policy.name == 'bco-cnn':
+      #       obs = obs.unsqueeze(1)
 
-      # action
-      a = policy(obs).squeeze().detach().cpu().numpy()
+      # # action
+      # a = policy(obs).squeeze().detach().cpu().numpy()
+
+      a = override.act(s)
 
       prova, logp = self._decide_action(s=s, g=g)
 

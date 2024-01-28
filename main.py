@@ -40,32 +40,31 @@ if __name__ == '__main__':
 
   world = dm.build_world(args, True, enable_stable_pd=False)
 
+  # scaler
+  scaler_version = 4000
+  scaler_path = root_dir+'/data/scaler-'+str(scaler_version)+'.joblib'
+  scaler = joblib.load(scaler_path)    
+  min_val = -61.59686279296875
+  max_val = 68.45513916015625
+
   # model 
   obs_dim = world.env.get_state_size()
   action_dim = world.env.get_action_size()
 
   version = my_args.version if my_args.version else 100
-  policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, device=device).eval()
-  policy = BCO_cnn(obs_dim, action_dim).eval()
+  policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, scaler=scaler, device=device).eval()
+  # policy = BCO_cnn(obs_dim, action_dim).eval()
 
   src = root_dir+'/checkpoints/'
   policy.load_parameters(src, version=version)
 
-    
-  # scaler
-  scaler_version = 6000
-  scaler_path = root_dir+'/data/scaler-'+str(scaler_version)+'.joblib'
-  scaler = joblib.load(scaler_path)
-  min_val = -61.59686279296875
-  max_val = 68.45513916015625
 
-
-  override = {
-    'policy': policy,
-    'min': min_val,
-    'max': max_val,
-    'scaler': scaler
-  }
+  # override = {
+  #   'policy': policy,
+  #   'min': min_val,
+  #   'max': max_val,
+  #   'scaler': scaler
+  # }
 
   while (world.env._pybullet_client.isConnected()):
 
@@ -80,5 +79,5 @@ if __name__ == '__main__':
       step = True
    
     if (animating or step):
-      s, a = dm.update_world(world, timeStep, override=override) 
+      s, a = dm.update_world(world, timeStep, override=policy) 
       step = False
