@@ -1,11 +1,12 @@
 import sys
 import time
+import argparse
 from git import Repo
 
 import torch
 import numpy as np 
 
-from model import BCAgent
+from models import BCOAgentFC
 import deep_mimic.rl_util as dm
 
 # set up train device
@@ -20,6 +21,13 @@ print("root: {}".format(root_dir))
 
 if __name__ == '__main__':
 
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-v', '--version', type=str, help="Insert model version ")
+  args = parser.parse_args()
+
+  # Set up the environment
+  version = args.version if args.version else 100
+
   update_timestep = 1. / 240.
   animating = True
   step = False
@@ -32,12 +40,16 @@ if __name__ == '__main__':
 
   world = dm.build_world(args, True, enable_stable_pd=False)
 
-  policy = BCAgent(196,36,device).eval()
+  obs_dim = world.env.get_state_size()
+  action_dim = world.env.get_action_size()
 
-  src = root_dir+'/checkpoints/'+policy.name.lower()+'.pt'
-  policy.load_parameters(src)
-  
-  
+  print(obs_dim)
+  policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, device=device).eval()
+
+  version = 5
+  src = root_dir+'/checkpoints/'
+  policy.load_parameters(src, version=version)
+    
   min_val = -61.59686279296875
   max_val = 68.45513916015625
 

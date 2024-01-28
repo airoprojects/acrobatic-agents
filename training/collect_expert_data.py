@@ -125,10 +125,13 @@ if __name__ == '__main__':
 
   num_interactions = 6000
 
-  observations = np.empty((num_interactions,) + (196,))
-  actions = np.empty((num_interactions,) + (36,))
-
   world = build_world(args, True)
+  obs_dim = world.env.get_state_size()
+  action_dim = world.env.get_action_size()
+
+  observations = np.empty((num_interactions,) + (obs_dim,)) # 197
+  actions = np.empty((num_interactions,) + (action_dim,)) # 36
+
   while (world.env._pybullet_client.isConnected()):
 
     timeStep = update_timestep
@@ -153,11 +156,11 @@ if __name__ == '__main__':
           continue
         else:
             actions[step_counter] = a
-            observations[step_counter] = s[:196]
+            observations[step_counter] = s
+      else:
+        discarded += 1
 
       step_counter += 1
-
-
 
   # observations = np.asarray(observations, dtype=object)
   # actions = np.asarray(actions, dtype=object)

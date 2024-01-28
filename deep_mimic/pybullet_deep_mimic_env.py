@@ -134,7 +134,7 @@ class PyBulletDeepMimicEnv(Env):
     return self.get_reward_max(agent_id)
 
   #scene_name == "imitate" -> cDrawSceneImitate
-  def get_state_size(self, agent_id):
+  def get_state_size(self, agent_id='sasso'):
     #cCtController::GetStateSize()
     #int state_size = cDeepMimicCharController::GetStateSize();
     #                     state_size += GetStatePoseSize();#106
@@ -169,7 +169,7 @@ class PyBulletDeepMimicEnv(Env):
   def get_goal_size(self, agent_id):
     return 0
 
-  def get_action_size(self, agent_id):
+  def get_action_size(self, agent_id='sasso'):
     ctrl_size = 43  #numDof
     root_size = 7
     return ctrl_size - root_size

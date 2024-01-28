@@ -381,7 +381,7 @@ class RLAgent(ABC):
 
       
       policy = copy.deepcopy(override[0])
-      obs = torch.from_numpy(s[:196]).float().unsqueeze(0) # [1,196]
+      obs = torch.from_numpy(s).float().unsqueeze(0) # [1,196]
 
       # update new min max
 

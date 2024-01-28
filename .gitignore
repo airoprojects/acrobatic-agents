@@ -164,8 +164,9 @@ cython_debug/
 # datasets
 datasets
 
-# old code 
-old
+# backups for dataset and checpoints  
+backups/
 
 # model checpoints 
-# *.pt
+*.pt
+
