@@ -172,3 +172,6 @@ backups/
 
 # rollout data
 *.npy
+
+# fit scaler
+*.joblib

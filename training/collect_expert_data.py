@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
       if step_counter >= num_interactions: break
       
-      if not (s is None and a is None):
+      if (not s is None) and (not a is None):
         if (a > 1e2).any() or (a > 1e2).any():
           discarded +=1
           continue

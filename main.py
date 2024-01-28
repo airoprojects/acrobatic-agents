@@ -1,5 +1,7 @@
 import sys
 import time
+import pickle
+import joblib
 import argparse
 from git import Repo
 
@@ -21,35 +23,46 @@ print("root: {}".format(root_dir))
 
 if __name__ == '__main__':
 
+  # arg pareser
   parser = argparse.ArgumentParser()
   parser.add_argument('-v', '--version', type=str, help="Insert model version ")
-  args = parser.parse_args()
+  my_args = parser.parse_args()
 
-  # Set up the environment
-  version = args.version if args.version else 100
-
+  # env set up
   update_timestep = 1. / 240.
   animating = True
   step = False
   args = sys.argv[1:]
 
-  actions = []
-  observations = []
+  # actions = []
+  # observations = []
 
   world = dm.build_world(args, True, enable_stable_pd=False)
 
+  # model 
   obs_dim = world.env.get_state_size()
   action_dim = world.env.get_action_size()
 
-  print(obs_dim)
+  version = my_args.version if my_args.version else 100
   policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, device=device).eval()
 
-  version = 5
   src = root_dir+'/checkpoints/'
   policy.load_parameters(src, version=version)
     
+  # scaler
+  scaler_version = 4000
+  scaler_path = root_dir+'/data/scaler-'+str(scaler_version)+'.joblib'
+  scaler = joblib.load(scaler_path)
   min_val = -61.59686279296875
   max_val = 68.45513916015625
+
+
+  override = {
+    'policy': policy,
+    'min': min_val,
+    'max': max_val,
+    'scaler': scaler
+  }
 
   while (world.env._pybullet_client.isConnected()):
 
@@ -64,5 +77,5 @@ if __name__ == '__main__':
       step = True
    
     if (animating or step):
-      s, a = dm.update_world(world, timeStep, override=(policy, min_val, max_val)) 
+      s, a = dm.update_world(world, timeStep, override=override) 
       step = False

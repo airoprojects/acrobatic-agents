@@ -1,6 +1,7 @@
 # general imports
 tqdm
 gitpython
+scikit-learn
 
 # pybullet
 pybullet
