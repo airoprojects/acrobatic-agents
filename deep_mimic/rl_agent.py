@@ -373,30 +373,40 @@ class RLAgent(ABC):
     if override:
       # print('OVERRIDE MODEEEE')
       
-      if not self.min_val and not self.max_val:
-        self.min_val = override[1]
-        self.max_val = override[2]
-        print(f'start: {override[1]}')
-        print(f'start: {override[2]}')
-
+      policy = copy.deepcopy(override['policy'])
       
-      policy = copy.deepcopy(override[0])
-      obs = torch.from_numpy(s).float().unsqueeze(0) # [1,196]
+      # # START min/max
+      # r_obs = torch.from_numpy(s).float().unsqueeze(0) # [1,196]
 
-      # update new min max
+      # # extract min max
+      # if not self.min_val and not self.max_val:
+      #   self.min_val = override['min']
+      #   self.max_val = override['max']
+      #   print(f'start: {self.min_val}')
+      #   print(f'start: {self.max_val}')
 
-      # print(f'self.max -> {self.max_val }')
-      # print(f'self.min -> {self.min_val }')
-      if obs.min() < self.min_val : 
-        self.min_val = obs.min()
-        print(f'new min: {self.min_val}')
-      if obs.max() > self.max_val : 
-        self.max_val = obs.max()
-        print(f'new max: {self.max_val}')
+      # # update new min max
+      # if r_obs.min() < self.min_val : 
+      #   self.min_val = obs.min()
+      #   print(f'new min: {self.min_val}')
 
-      # obseravtion normalization
-      n_obs = 2 * ((obs - self.min_val) / (self.max_val - self.min_val)) - 1
-      a = policy(n_obs).squeeze().detach().cpu().numpy()
+      # if r_obs.max() > self.max_val : 
+      #   self.max_val = obs.max()
+      #   print(f'new max: {self.max_val}')
+        
+      # # min max norm
+      # obs = 2 * ((r_obs - self.min_val) / (self.max_val - self.min_val)) - 1 # [1,196]
+      # END min/max
+        
+      # robust
+      scaler = override['scaler']
+      n_obs = scaler.transform(s.reshape(1, -1))
+      obs = torch.from_numpy(n_obs).float() #.unsqueeze(0) # [1,196]
+      
+      print(obs.shape)
+
+      # action
+      a = policy(obs).squeeze().detach().cpu().numpy()
 
       prova, logp = self._decide_action(s=s, g=g)
 
@@ -409,7 +419,7 @@ class RLAgent(ABC):
 
     else:
       a, logp = self._decide_action(s=s, g=g)
-      print('ciaooooooo ci avevi creduto ehhh')
+      # print('ciaooooooo ci avevi creduto ehhh')
     
 
     assert len(np.shape(a)) == 1
