@@ -170,3 +170,5 @@ backups/
 # model checpoints 
 *.pt
 
+# rollout data
+*.npy

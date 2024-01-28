@@ -31,8 +31,6 @@ if __name__ == '__main__':
   update_timestep = 1. / 240.
   animating = True
   step = False
-  total_reward = 0
-  steps = 0
   args = sys.argv[1:]
 
   actions = []

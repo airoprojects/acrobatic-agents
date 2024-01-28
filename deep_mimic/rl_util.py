@@ -31,18 +31,15 @@ from deep_mimic.rl_world import RLWorld
 from deep_mimic.ppo_agent import PPOAgent 
 from deep_mimic.pybullet_deep_mimic_env import PyBulletDeepMimicEnv
 
-update_timestep = 1. / 240.
-animating = True
-step = False
+# global variable
 total_reward = 0
 steps = 0
-args = sys.argv[1:]
 
 
 def update_world(world, time_elapsed, override=False):
   # print(f'override -> {override.name}')
 
-  timeStep = update_timestep
+  timeStep = time_elapsed
   s, a = world.update(timeStep, override=override)
 
   reward = world.env.calc_reward(agent_id=0)
