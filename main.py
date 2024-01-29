@@ -9,7 +9,7 @@ import torch
 import numpy as np 
 
 from models import BCOAgentFC
-from models import BCO_cnn
+from models import BCOCNN
 import deep_mimic.rl_util as dm
 
 # set up train device
@@ -27,14 +27,17 @@ if __name__ == '__main__':
 
   # arg pareser
   parser = argparse.ArgumentParser()
+  parser.add_argument('-m', '--model', type=int, help="Insert one model of you choice: [1: fc, 2:cnn]")
   parser.add_argument('-v', '--version', type=str, help="Insert model version")
   parser.add_argument('-s', '--scaler', type=str, help="Insert scaler version")
   parser.add_argument('-t', '--task', type=str, help="Insert type of task : avaliable [backflip, spinkick])")
   args = parser.parse_args()
 
-  type_task = args.task if args.task else 'backflip'
-  scaler_version = args.scaler if args.scaler else 20000
+  model_type = args.model if args.model else 1
   model_version = args.version if args.version else 1
+  scaler_version = args.scaler if args.scaler else 20000
+  task_type = args.task if args.task else 'backflip'
+
 
   # env set up
   update_timestep = 1. / 240.
@@ -43,7 +46,7 @@ if __name__ == '__main__':
   # args = sys.argv[1:]
 
   # env
-  world = dm.build_world(True, enable_stable_pd=True, task=type_task)
+  world = dm.build_world(True, enable_stable_pd=True, task=task_type)
 
   # scaler
   scaler_path = root_dir+'/data/scaler-'+str(scaler_version)+'.joblib'
@@ -52,12 +55,18 @@ if __name__ == '__main__':
   # model 
   obs_dim = world.env.get_state_size()
   action_dim = world.env.get_action_size()
+  
+  if model_type == 1:
+    policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, scaler=scaler, device=device).eval()
+  
+  elif model_type == 2:
+    policy = BCOCNN(obs_dim, action_dim, scaler=scaler).eval()
 
-  # policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, scaler=scaler, device=device).eval()
-  policy = BCO_cnn(obs_dim, action_dim, scaler=scaler).eval()
+  else:
+    raise("Model does not exist ")
 
   # load policy parameters
-  src = root_dir+'/checkpoints/'
+  src = root_dir+'/checkpoints/'+str(task_type)+'/'
   policy.load_parameters(src, version=model_version)
 
   # simulation

@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
   # Set up the environment
   num_interactions = args.iterations if args.iterations else 6000
-  type_task = args.task if args.task else 'backflip'
+  task_type = args.task if args.task else 'backflip'
 
   update_timestep = 1. / 240.
   animating = True
@@ -58,7 +58,7 @@ if __name__ == '__main__':
   # args = sys.argv[1:]
 
   # env
-  world = build_world(True, enable_stable_pd=True,task = type_task)
+  world = build_world(True, enable_stable_pd=True,task = task_type)
   obs_dim = world.env.get_state_size()
   action_dim = world.env.get_action_size()
 
@@ -105,7 +105,7 @@ if __name__ == '__main__':
   print('discarded', discarded)
 
   # saving
-  save_dir = root_dir+'/data/'+str(type_task)
+  save_dir = root_dir+'/data/'+str(task_type)
   if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
