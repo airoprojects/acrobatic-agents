@@ -37,21 +37,18 @@ steps = 0
 
 
 def update_world(world, time_elapsed, override=False):
-  # print(f'override -> {override.name}')
-
   timeStep = time_elapsed
   s, a = world.update(timeStep, override=override)
 
   reward = world.env.calc_reward(agent_id=0)
   global total_reward
   total_reward += reward
+  #print("reward=",reward)
 
   global steps
   steps+=1
-  
-  #print("reward=",reward)
   #print("steps=",steps)
-
+  
   end_episode = world.env.is_episode_end()
   if (end_episode or steps>= 1000):
     print("total_reward=",total_reward)
@@ -62,17 +59,22 @@ def update_world(world, time_elapsed, override=False):
 
   return s, a
 
-def build_arg_parser(args,task = None):
+def build_arg_parser(task=None):
   arg_parser = ArgParser()
-  arg_parser.load_args(args)
-  arg_file = arg_parser.parse_string('arg_file', '')
-  if task=='spinkick':
-    arg_file = arg_parser.parse_string('arg_file', 'run_humanoid3d_spinkick_args.txt')
-  
-  #add here other mocap data if you want change:
+  arg_file = ''
+  # arg_parser.load_args(args)
+  # arg_file = arg_parser.parse_string('arg_file', '')
 
-  if arg_file == '':
+  # add here other mocap data if you want change:
+  if task == 'spinkick':
+    # arg_file = arg_parser.parse_string('arg_file', 'run_humanoid3d_spinkick_args.txt')
+    arg_file = "run_humanoid3d_spinkick_args.txt"
+  
+  if task == 'backflip':
     arg_file = "run_humanoid3d_backflip_args.txt"
+
+  # if arg_file == '':
+  #   arg_file = "run_humanoid3d_backflip_args.txt"
 
   if (arg_file != ''):
     path = pybullet_data.getDataPath() + "/args/" + arg_file
@@ -80,22 +82,30 @@ def build_arg_parser(args,task = None):
     Logger.print2(arg_file)
     assert succ, Logger.print2('Failed to load args from: ' + arg_file)
 
+  else:
+    print('Task not available !!!')
+    return None
+
   return arg_parser
 
 
-def build_world(args, enable_draw, enable_stable_pd, task=None):
-  arg_parser = build_arg_parser(args,task)
+def build_world(enable_draw, enable_stable_pd, task=None):
+  arg_parser = build_arg_parser(task)
   print("enable_draw=", enable_draw)
+
   env = PyBulletDeepMimicEnv(arg_parser, enable_draw, enable_stable_pd=enable_stable_pd)
   world = RLWorld(env, arg_parser)
   #world.env.set_playback_speed(playback_speed)
 
   motion_file = arg_parser.parse_string("motion_file")
   print("motion_file=", motion_file)
+
   bodies = arg_parser.parse_ints("fall_contact_bodies")
   print("bodies=", bodies)
+
   int_output_path = arg_parser.parse_string("int_output_path")
   print("int_output_path=", int_output_path)
+
   agent_files = pybullet_data.getDataPath() + "/" + arg_parser.parse_string("agent_files")
 
   AGENT_TYPE_KEY = "AgentType"

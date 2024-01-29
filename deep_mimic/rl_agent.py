@@ -411,11 +411,11 @@ class RLAgent(ABC):
 
       a = override.act(s)
 
-      prova, logp = self._decide_action(s=s, g=g)
+      _, logp = self._decide_action(s=s, g=g)
 
       # print(f'state min -> {s.min()}')
       # print(f'state max -> {s.max()}')
-      # print(f'ppo action -> {prova}')
+      # print(f'ppo action -> {_}')
       # print(f'observation min -> {obs.min()}')
       # print(f'observation max -> {obs.max()}')
       # print(f'nostra action -> {a}')

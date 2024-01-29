@@ -45,22 +45,20 @@ if __name__ == '__main__':
 
   parser = argparse.ArgumentParser()
   parser.add_argument('-i', '--iterations', type=int, help="Insert num of rollouts")
-  parser.add_argument('-t', '--task', type=str, help="Insert type of task(backflip, spinkick, ... )")
-
+  parser.add_argument('-t', '--task', type=str, help="Insert type of task : avaliable [backflip, spinkick])")
   args = parser.parse_args()
 
   # Set up the environment
   num_interactions = args.iterations if args.iterations else 6000
-
   type_task = args.task if args.task else 'backflip'
-
 
   update_timestep = 1. / 240.
   animating = True
   step = False
-  args = sys.argv[1:]
+  # args = sys.argv[1:]
 
-  world = build_world(args, True, enable_stable_pd=True,task = type_task)
+  # env
+  world = build_world(True, enable_stable_pd=True,task = type_task)
   obs_dim = world.env.get_state_size()
   action_dim = world.env.get_action_size()
 
@@ -104,8 +102,16 @@ if __name__ == '__main__':
   # actions = np.asarray(actions, dtype=object)
   # currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
         
-
   print('discarded', discarded)
-  np.save(root_dir+'/data/expert-observations-'+str(type_task)+'-'+str(num_interactions), observations) 
-  np.save(root_dir+'/data/expert-actions-'+str(type_task)+'-'+str(num_interactions), actions) 
+
+  # saving
+  save_dir = root_dir+'/data/'+str(type_task)
+  if not os.path.exists(save_dir):
+    os.makedirs(save_dir)
+
+  np.save(save_dir+'/expert-observations-'+str(num_interactions), observations) 
+  np.save(save_dir+'/expert-actions-'+str(num_interactions), actions) 
+
+  # np.save(root_dir+'/data/expert-observations-'+str(type_task)+'-'+str(num_interactions), observations) 
+  # np.save(root_dir+'/data/expert-actions-'+str(type_task)+'-'+str(num_interactions), actions) 
 
