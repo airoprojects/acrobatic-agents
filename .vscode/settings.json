@@ -1,5 +1,6 @@
 {
   "python.analysis.extraPaths": [
-    "./deep_mimic"
+    "./deep_mimic",
+    "./models"
   ]
 }

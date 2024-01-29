@@ -23,7 +23,6 @@ repo = Repo(".", search_parent_directories=True)
 root_dir = repo.git.rev_parse("--show-toplevel")
 print("root: {}".format(root_dir))
 
-
 # Get the path to this file
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, root_dir+'/deep_mimic/')
@@ -90,6 +89,7 @@ if __name__ == '__main__':
         if (a > 1e2).any() or (a > 1e2).any():
           discarded +=1
           continue
+
         else:
             actions[step_counter] = a
             observations[step_counter] = s
@@ -97,11 +97,9 @@ if __name__ == '__main__':
       else:
         discarded += 1
 
-
   # observations = np.asarray(observations, dtype=object)
   # actions = np.asarray(actions, dtype=object)
-  
-  currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+  # currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
   print('discarded', discarded)
   np.save(root_dir+'/data/expert-observations-'+str(num_interactions), observations) 

@@ -21,7 +21,7 @@ from pybullet_envs.deep_mimic.env.action_space import ActionSpace
 class InitializationStrategy(Enum):
   """Set how the environment is initialized."""
   START = 0
-  RANDOM = 0  # random state initialization (RSI) MODDED
+  RANDOM = 1  # random state initialization (RSI) MODDED
 
 
 class PyBulletDeepMimicEnv(Env):
@@ -335,7 +335,7 @@ class PyBulletDeepMimicEnv(Env):
     isEnded = self._humanoid.terminates()
     #also check maximum time, 20 seconds (todo get from file)
     #print("self.t=",self.t)
-    if (self.t > 20):
+    if (self.t > 30):
       isEnded = True
     return isEnded
 

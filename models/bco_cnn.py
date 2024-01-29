@@ -51,8 +51,8 @@ class BCO_cnn(nn.Module):
     def act(self, state):
         n_obs = self.scaler.transform(state.reshape(1, -1))
         obs = torch.from_numpy(n_obs).float() #.unsqueeze(0) # [1,196]
-        a = self.forward(obs).squeeze().detach().cpu().numpy()
         obs = obs.unsqueeze(1)
+        a = self.forward(obs).squeeze().detach().cpu().numpy()
         return a
 
     def load_parameters(self, src, version):

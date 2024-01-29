@@ -175,3 +175,8 @@ backups/
 
 # fit scaler
 *.joblib
+
+# vscode
+.vscode/
+sttings.json
+.vscode/settings.json

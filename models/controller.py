@@ -12,7 +12,7 @@ class Controller(nn.Module):
     def __init__(self, in_dim, out_dim):
         super().__init__()
 
-        self.name = 'CONTINUOUS'
+        self.name = 'CONTROLLER'
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         # continuous

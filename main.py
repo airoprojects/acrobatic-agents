@@ -22,6 +22,8 @@ repo = Repo(".", search_parent_directories=True)
 root_dir = repo.git.rev_parse("--show-toplevel")
 print("root: {}".format(root_dir))
 
+
+
 if __name__ == '__main__':
 
   # arg pareser
@@ -38,7 +40,7 @@ if __name__ == '__main__':
   # actions = []
   # observations = []
 
-  world = dm.build_world(args, True, enable_stable_pd=False)
+  world = dm.build_world(args, True, enable_stable_pd=True)
 
   # scaler
   scaler_version = 4000

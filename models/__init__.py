@@ -6,3 +6,5 @@ from .bco_agents import BCOAgentFC
 from .bco_cnn import BCO_cnn
 
 from .controller import Controller
+from .encoder import Encoder
+from .encoder import LATENT
