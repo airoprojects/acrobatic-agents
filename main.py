@@ -30,7 +30,7 @@ if __name__ == '__main__':
   parser.add_argument('-m', '--model', type=int, help="Insert one model of you choice: [1: fc, 2:cnn]")
   parser.add_argument('-v', '--version', type=str, help="Insert model version")
   parser.add_argument('-s', '--scaler', type=str, help="Insert scaler version")
-  parser.add_argument('-t', '--task', type=str, help="Insert type of task : avaliable [backflip, spinkick])")
+  parser.add_argument('-t', '--task', type=str, help="Insert type of task : avaliable [backflip, spinkick, mixed])")
   args = parser.parse_args()
 
   model_type = args.model if args.model else 1
@@ -38,6 +38,11 @@ if __name__ == '__main__':
   scaler_version = args.scaler if args.scaler else 20000
   task_type = args.task if args.task else 'backflip'
 
+  if task_type == 'mixed' : 
+    task_dir = 'mixed'
+    task_type = 'spinkick'
+  else:
+    task_dir = task_type
 
   # env set up
   update_timestep = 1. / 240.
@@ -66,7 +71,7 @@ if __name__ == '__main__':
     raise("Model does not exist ")
 
   # load policy parameters
-  src = root_dir+'/checkpoints/'+str(task_type)+'/'
+  src = root_dir+'/checkpoints/'+str(task_dir)+'/'
   policy.load_parameters(src, version=model_version)
 
   # simulation
