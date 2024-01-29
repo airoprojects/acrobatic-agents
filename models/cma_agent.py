@@ -84,12 +84,12 @@ class CMAPolicy(nn.Module):
 
         # cma training parameters
         self.sigma = 0.2
-        self.pop_size = 8
-        self.n_samples = 3
+        self.pop_size = 12
+        self.n_samples = 4
         self.fixed_seed = 588039 
         self.max_reward = 1000
         # self.stop_condiction = 700 # stop at (1000 - reward) e.g. s.c. = 200 --> reward = 800
-        self.target_mean = 150 # target mean reward
+        self.target_mean = 100 # target mean reward
   
     def act(self, state):  
       n_obs = self.scaler.transform(state.reshape(1, -1))
@@ -246,7 +246,7 @@ class CMAPolicy(nn.Module):
             steps+=1
 
             end_episode = world.env.is_episode_end()
-            if (end_episode or steps>= 2000):
+            if (end_episode):# or steps >= 5000):
                 # print("total_reward=",total_reward)
                 # total_reward=0
                 steps = 0
