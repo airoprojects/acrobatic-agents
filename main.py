@@ -45,11 +45,11 @@ if __name__ == '__main__':
   # actions = []
   # observations = []
 
-
-  world = dm.build_world(args, True, enable_stable_pd=True,task=type_task)
+  # env
+  world = dm.build_world(args, True, enable_stable_pd=True, task=type_task)
 
   # scaler
-  scaler_version = 'mixed-6000'
+  scaler_version = 20000 #'mixed-6000'
   scaler_path = root_dir+'/data/scaler-'+str(scaler_version)+'.joblib'
   scaler = joblib.load(scaler_path)    
   min_val = -61.59686279296875
@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
   version = my_args.version if my_args.version else 100
   # policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, scaler=scaler, device=device).eval()
-  policy = BCO_cnn(obs_dim, action_dim,scaler=scaler).eval()
+  policy = BCO_cnn(obs_dim, action_dim, scaler=scaler).eval()
 
   src = root_dir+'/checkpoints/'
   policy.load_parameters(src, version=version)
