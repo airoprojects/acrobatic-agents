@@ -62,10 +62,14 @@ def update_world(world, time_elapsed, override=False):
 
   return s, a
 
-def build_arg_parser(args):
+def build_arg_parser(args,task = None):
   arg_parser = ArgParser()
   arg_parser.load_args(args)
   arg_file = arg_parser.parse_string('arg_file', '')
+  if task=='spinkick':
+    arg_file = arg_parser.parse_string('arg_file', 'run_humanoid3d_spinkick_args.txt')
+  
+  #add here other mocap data if you want change:
 
   if arg_file == '':
     arg_file = "run_humanoid3d_backflip_args.txt"
@@ -79,9 +83,8 @@ def build_arg_parser(args):
   return arg_parser
 
 
-def build_world(args, enable_draw, enable_stable_pd):
-
-  arg_parser = build_arg_parser(args)
+def build_world(args, enable_draw, enable_stable_pd, task=None):
+  arg_parser = build_arg_parser(args,task)
   print("enable_draw=", enable_draw)
   env = PyBulletDeepMimicEnv(arg_parser, enable_draw, enable_stable_pd=enable_stable_pd)
   world = RLWorld(env, arg_parser)

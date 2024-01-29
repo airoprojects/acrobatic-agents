@@ -29,7 +29,12 @@ if __name__ == '__main__':
   # arg pareser
   parser = argparse.ArgumentParser()
   parser.add_argument('-v', '--version', type=str, help="Insert model version ")
+  parser.add_argument('-t', '--task', type=str, help="Insert type of task(backflip, spinkick, ... )")
+
+
   my_args = parser.parse_args()
+  type_task = my_args.task if my_args.task else 'backflip'
+
 
   # env set up
   update_timestep = 1. / 240.
@@ -40,10 +45,11 @@ if __name__ == '__main__':
   # actions = []
   # observations = []
 
-  world = dm.build_world(args, True, enable_stable_pd=True)
+
+  world = dm.build_world(args, True, enable_stable_pd=True,task=type_task)
 
   # scaler
-  scaler_version = 4000
+  scaler_version = 20000
   scaler_path = root_dir+'/data/scaler-'+str(scaler_version)+'.joblib'
   scaler = joblib.load(scaler_path)    
   min_val = -61.59686279296875
@@ -54,8 +60,8 @@ if __name__ == '__main__':
   action_dim = world.env.get_action_size()
 
   version = my_args.version if my_args.version else 100
-  policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, scaler=scaler, device=device).eval()
-  # policy = BCO_cnn(obs_dim, action_dim).eval()
+  # policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, scaler=scaler, device=device).eval()
+  policy = BCO_cnn(obs_dim, action_dim,scaler=scaler).eval()
 
   src = root_dir+'/checkpoints/'
   policy.load_parameters(src, version=version)
