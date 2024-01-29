@@ -49,7 +49,7 @@ if __name__ == '__main__':
   world = dm.build_world(args, True, enable_stable_pd=True,task=type_task)
 
   # scaler
-  scaler_version = 20000
+  scaler_version = 'mixed-6000'
   scaler_path = root_dir+'/data/scaler-'+str(scaler_version)+'.joblib'
   scaler = joblib.load(scaler_path)    
   min_val = -61.59686279296875
