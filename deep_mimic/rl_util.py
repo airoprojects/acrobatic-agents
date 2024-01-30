@@ -89,7 +89,7 @@ def build_arg_parser(task=None):
   return arg_parser
 
 
-def build_world(enable_draw, enable_stable_pd, task=None):
+def build_world(enable_draw, enable_stable_pd=True, task=None):
   arg_parser = build_arg_parser(task)
   print("enable_draw=", enable_draw)
 
