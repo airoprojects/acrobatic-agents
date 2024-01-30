@@ -30,7 +30,6 @@ print(sys.path)
 from rl_util import build_world 
 from rl_util import update_world
 
-
 # Add the root directory to sys.path if it's not already there
 if parent_dir not in sys.path:
     sys.path.insert(0, parent_dir)
@@ -43,9 +42,14 @@ print("root: {}".format(root_dir))
 
 if __name__ == '__main__':
 
+  available_tasks = [
+    'backflip', 
+    'spinkick'
+  ]
+
   parser = argparse.ArgumentParser()
   parser.add_argument('-i', '--iterations', type=int, help="Insert num of rollouts")
-  parser.add_argument('-t', '--task', type=str, help="Insert type of task : avaliable [backflip, spinkick])")
+  parser.add_argument('-t', '--task', type=str, help=f"Insert type of task: {available_tasks})")
   args = parser.parse_args()
 
   # Set up the environment

@@ -3,6 +3,7 @@ import time
 import pickle
 import joblib
 import argparse
+# import argcomplete
 from git import Repo
 
 import torch
@@ -25,24 +26,36 @@ print("root: {}".format(root_dir))
 
 if __name__ == '__main__':
 
+  available_models = [
+    'bco-fc-backflip',
+    'bco-cnn-backflip',
+    'bco-cnn-mixed',
+  ]
+
+  available_tasks = [
+    'backflip', 
+    'spinkick', 
+    'mixed'
+  ]
+
   # arg pareser
   parser = argparse.ArgumentParser()
-  parser.add_argument('-m', '--model', type=int, help="Insert one model of you choice: [1: fc, 2:cnn]")
+  parser.add_argument('-m', '--model', type=str, help=f"Insert one model of you choice: {available_models}")
   parser.add_argument('-v', '--version', type=str, help="Insert model version")
   parser.add_argument('-s', '--scaler', type=str, help="Insert scaler version")
-  parser.add_argument('-t', '--task', type=str, help="Insert type of task : avaliable [backflip, spinkick, mixed])")
+  parser.add_argument('-t', '--task', type=str, help=f"Insert type of task: {available_tasks})")
   args = parser.parse_args()
 
-  model_type = args.model if args.model else 1
+  model_type = args.model if args.model else 'bco-cnn-backflip'
   model_version = args.version if args.version else 1
   scaler_version = args.scaler if args.scaler else 20000
   task_type = args.task if args.task else 'backflip'
 
-  if task_type == 'mixed' : 
-    task_dir = 'mixed'
-    task_type = 'spinkick'
-  else:
-    task_dir = task_type
+  if task_type == 'mixed':
+    if np.random.uniform(low=0.0, high=1.0) > 0.5: 
+      task_type = 'spinkick'
+    else:
+      task_type = 'backflip'
 
   # env set up
   update_timestep = 1. / 240.
@@ -51,28 +64,38 @@ if __name__ == '__main__':
   # args = sys.argv[1:]
 
   # env
-  world = dm.build_world(True, enable_stable_pd=True, task=task_type)
+  world = dm.build_world(True, task=task_type)
 
   # scaler
-  scaler_path = root_dir+'/data/scaler-'+str(scaler_version)+'.joblib'
+  scaler_path = root_dir+'/data/scaler-'+str(task_type)+'-'+str(scaler_version)+'.joblib'
   scaler = joblib.load(scaler_path)    
 
-  # model 
+  # env dim
   obs_dim = world.env.get_state_size()
   action_dim = world.env.get_action_size()
   
-  if model_type == 1:
+  print("\n"+"#"*10)
+  print("Environment set for task: {}".format(task_type))
+  print("Model type: {}".format(model_type))
+  print("Model version: {}".format(model_version))
+  print("Scaler version: {}".format(scaler_version))
+
+  # model 
+  if 'bco-fc' in model_type:
     policy = BCOAgentFC(obs_dim, action_dim, h_size=obs_dim*2, scaler=scaler, device=device).eval()
   
-  elif model_type == 2:
+  elif 'bco-cnn' in model_type:
     policy = BCOCNN(obs_dim, action_dim, scaler=scaler).eval()
 
   else:
     raise("Model does not exist ")
 
   # load policy parameters
+  task_dir = model_type.split('-')[2]
   src = root_dir+'/checkpoints/'+str(task_dir)+'/'
   policy.load_parameters(src, version=model_version)
+  print("#"*10+"\n")
+
 
   # simulation
   while (world.env._pybullet_client.isConnected()):
@@ -85,7 +108,10 @@ if __name__ == '__main__':
       animating = not animating
    
     if world.env.isKeyTriggered(keys, 'i'):
-      step = True
+      step = True    
+    
+    if world.env.isKeyTriggered(keys, 's'):
+      break
    
     if (animating or step):
       s, a = dm.update_world(world, timeStep, override=policy) 
