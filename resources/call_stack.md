@@ -12,8 +12,7 @@
 # MAJOR CHANGE:
 # override action selection by activating the cloning agent:
 if override:
-  policy = copy.deepcopy(override)
-  a = policy(s)
+  a = override.act(s) # override old action decision with new policy
 else:
   a, logp = self._decide_action(s=s, g=g)
 ```
