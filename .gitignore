@@ -168,7 +168,7 @@ datasets
 backups/
 
 # model checpoints 
-# *.pt
+*.pt
 
 # rollout data
 *.npy
