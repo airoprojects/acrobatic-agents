@@ -1,5 +1,7 @@
+import os
 import sys
 import time
+import json
 import pickle
 import joblib
 import argparse
@@ -23,31 +25,52 @@ repo = Repo(".", search_parent_directories=True)
 root_dir = repo.git.rev_parse("--show-toplevel")
 print("root: {}".format(root_dir))
 
-
 if __name__ == '__main__':
-
-  available_models = [
-    'bco-fc-backflip',
-    'bco-cnn-backflip',
-    'bco-cnn-mixed',
-  ]
-
-  available_tasks = [
-    'backflip', 
-    'spinkick', 
-    'mixed'
-  ]
 
   # arg pareser
   parser = argparse.ArgumentParser()
-  parser.add_argument('-m', '--model', type=str, help=f"Insert one model of you choice: {available_models}")
-  parser.add_argument('-v', '--version', type=str, help="Insert model version")
-  parser.add_argument('-s', '--scaler', type=str, help="Insert scaler version")
-  parser.add_argument('-t', '--task', type=str, help=f"Insert type of task: {available_tasks})")
+  parser.add_argument('--info', action='store_true', help=f"Version lookup table.")
+  parser.add_argument('-m', '--model', type=str, help=f"Insert model type.")
+  parser.add_argument('-v', '--version', type=str, help="Insert model version.")
+  parser.add_argument('-s', '--scaler', type=str, help="Insert scaler version. Default 20000 (best).")
+  parser.add_argument('-t', '--task', type=str, help=f"Insert type of task")
   args = parser.parse_args()
 
+  # info
+  if args.info:
+
+    print("\n\nUsage: python main.py [-h] [--info] [-m MODEL] [-v VERSION] [-s SCALER] [-t TASK]\n")
+
+    with open(root_dir+'/versions/model_versions.json', 'r') as file:
+      model_versions = json.load(file)
+  
+    table_str = "Available Models and Versions:\n\n"
+    table_str += "Model            | Versions\n"
+    table_str += "-----------------|-----------------\n"
+
+    for model, versions in model_versions.items():
+        versions_str = ", ".join(versions)
+        table_str += f"{model:<16} | {versions_str}\n"
+
+    print(table_str)
+    available_tasks = ['backflip', 'spinkick', 'jump', 'mixed']
+
+    print("Scalers:")
+    items = set()
+    for data_task in available_tasks:
+      contents = os.listdir(root_dir+'/data/'+data_task)
+      for item in contents:
+          if item not in items and 'scaler' in item: print(item)
+          items.add(item)
+
+    print("\nAvailable tasks: ")
+    for task in available_tasks:
+      print(task)
+    print()
+    exit()
+
   model_type = args.model if args.model else 'bco-cnn-backflip'
-  model_version = args.version if args.version else 1
+  model_version = args.version if args.version else '20k-4'
   scaler_version = args.scaler if args.scaler else 20000
   task_type = args.task if args.task else 'backflip'
 
@@ -67,7 +90,7 @@ if __name__ == '__main__':
   world = dm.build_world(True, task=task_type)
 
   # scaler
-  scaler_path = root_dir+'/data/scaler-'+str(task_type)+'-'+str(scaler_version)+'.joblib'
+  scaler_path = root_dir+'/data/'+str(task_type)+'/scaler-'+str(scaler_version)+'.joblib'
   scaler = joblib.load(scaler_path)    
 
   # env dim
@@ -96,6 +119,7 @@ if __name__ == '__main__':
   policy.load_parameters(src, version=model_version)
   print("#"*10+"\n")
 
+  print("Starting simulation: \npress q for quit \npress space for pause\n")
 
   # simulation
   while (world.env._pybullet_client.isConnected()):
@@ -110,7 +134,7 @@ if __name__ == '__main__':
     if world.env.isKeyTriggered(keys, 'i'):
       step = True    
     
-    if world.env.isKeyTriggered(keys, 's'):
+    if world.env.isKeyTriggered(keys, 'q'):
       break
    
     if (animating or step):

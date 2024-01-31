@@ -73,8 +73,8 @@ def build_arg_parser(task=None):
   if task == 'backflip':
     arg_file = "run_humanoid3d_backflip_args.txt"
 
-  # if arg_file == '':
-  #   arg_file = "run_humanoid3d_backflip_args.txt"
+  if task == 'jump':
+    arg_file = "run_humanoid3d_jump_args.txt"
 
   if (arg_file != ''):
     path = pybullet_data.getDataPath() + "/args/" + arg_file
@@ -107,13 +107,13 @@ def build_world(enable_draw, enable_stable_pd=True, task=None):
   print("int_output_path=", int_output_path)
 
   agent_files = pybullet_data.getDataPath() + "/" + arg_parser.parse_string("agent_files")
-
   AGENT_TYPE_KEY = "AgentType"
-
   print("agent_file=", agent_files)
+
   with open(agent_files) as data_file:
     json_data = json.load(data_file)
     print("json_data=", json_data)
+
     assert AGENT_TYPE_KEY in json_data
     agent_type = json_data[AGENT_TYPE_KEY]
     print("agent_type=", agent_type)

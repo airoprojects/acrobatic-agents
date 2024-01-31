@@ -13,11 +13,6 @@ from pybullet_utils.arg_parser import ArgParser
 import random
 import numpy as np
 
-# import ..deep_mimic.rl_util as dm
-# from deep_mimic.rl_world import RLWorld  
-# from deep_mimic.ppo_agent import PPOAgent 
-# from deep_mimic.pybullet_deep_mimic_env import PyBulletDeepMimicEnv
-
 # setup project root dir
 repo = Repo(".", search_parent_directories=True)
 root_dir = repo.git.rev_parse("--show-toplevel")
@@ -62,7 +57,7 @@ if __name__ == '__main__':
   # args = sys.argv[1:]
 
   # env
-  world = build_world(True, enable_stable_pd=True,task = task_type)
+  world = build_world(enable_draw=True, task=task_type)
   obs_dim = world.env.get_state_size()
   action_dim = world.env.get_action_size()
 
@@ -101,12 +96,8 @@ if __name__ == '__main__':
             step_counter += 1
       else:
         discarded += 1
-
-  # observations = np.asarray(observations, dtype=object)
-  # actions = np.asarray(actions, dtype=object)
-  # currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
         
-  print('discarded', discarded)
+  print('discarded: {}'.format(discarded))
 
   # saving
   save_dir = root_dir+'/data/'+str(task_type)

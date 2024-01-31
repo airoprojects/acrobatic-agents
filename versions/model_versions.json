@@ -1,0 +1,20 @@
+{
+    "bco-cnn-backflip": [
+        "5k-1",
+        "10k-1",
+        "20k-1"
+    ],
+    "bco-cnn-spinkick": [
+        "5k-1",
+        "10k-1",
+        "20k-1"
+    ],
+    "bco-cnn-jump": [
+        "5k-1",
+        "10k-1",
+        "20k-1"
+    ],
+    "bco-cnn-mixed": [
+        "35k-1"
+    ]
+}
