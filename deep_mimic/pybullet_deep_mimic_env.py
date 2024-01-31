@@ -335,7 +335,7 @@ class PyBulletDeepMimicEnv(Env):
     isEnded = self._humanoid.terminates()
     #also check maximum time, 20 seconds (todo get from file)
     #print("self.t=",self.t)
-    if (self.t > 30):
+    if (self.t > 60):
       isEnded = True
     return isEnded
 

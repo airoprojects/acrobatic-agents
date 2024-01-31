@@ -16,5 +16,20 @@
     ],
     "bco-cnn-mixed": [
         "35k-1"
+    ],
+    "bco-fc-backflip": [
+        "5k-1",
+        "10k-1",
+        "20k-1"
+    ],
+    "bco-fc-spinkick": [
+        "5k-1",
+        "10k-1",
+        "20k-1"
+    ],
+    "bco-fc-jump": [
+        "5k-1",
+        "10k-1",
+        "20k-1"
     ]
 }
