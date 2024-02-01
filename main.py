@@ -87,7 +87,7 @@ if __name__ == '__main__':
   # args = sys.argv[1:]
 
   # env
-  world = dm.build_world(True, task=task_type)
+  world = dm.build_world(enable_draw=True, task=task_type)
 
   # scaler
   scaler_path = root_dir+'/data/'+str(task_type)+'/scaler-'+str(scaler_version)+'.joblib'

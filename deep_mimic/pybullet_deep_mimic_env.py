@@ -34,7 +34,7 @@ class PyBulletDeepMimicEnv(Env):
     self._num_agents = 1
     self._pybullet_client = pybullet_client
     self._isInitialized = False
-    self._useStablePD = enable_stable_pd # MODDED; set to True for 
+    self._useStablePD = enable_stable_pd # MODDED; 
     self._arg_parser = arg_parser
     self.timeStep = time_step
     self._init_strategy = init_strategy
@@ -323,7 +323,7 @@ class PyBulletDeepMimicEnv(Env):
         else:
           self._humanoid.setJointMotors(self.desiredPose, maxForces=maxForces)
 
-        self._pybullet_client.stepSimulation()
+        self._pybullet_client.stepSimulation() # this make the humanoid move but I don't know where is defined
 
   def set_sample_count(self, count):
     return
