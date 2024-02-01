@@ -15,8 +15,9 @@
         "20k"
     ],
     "bco-cnn-mixed": [
-        "35k",
-        "40k"
+        "30k-kj",
+        "40k-bk",
+        "40k-bkj"
     ],
     "bco-fc-backflip": [
         "5k",
@@ -32,5 +33,9 @@
         "5k",
         "10k",
         "20k"
+    ],
+    "bco-fc-mixed": [
+        "25k-bkj",
+        "25k-bk"
     ]
 }
