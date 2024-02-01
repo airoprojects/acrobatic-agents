@@ -73,6 +73,10 @@ if __name__ == '__main__':
   model_version = args.version if args.version else '20k-4'
   scaler_version = args.scaler if args.scaler else 20000
   task_type = args.task if args.task else 'backflip'
+  
+  # scaler
+  scaler_path = root_dir+'/data/'+str(task_type)+'/scaler-'+str(scaler_version)+'.joblib'
+  scaler = joblib.load(scaler_path)    
 
   if task_type == 'mixed':
     if np.random.uniform(low=0.0, high=1.0) > 0.5: 
@@ -89,9 +93,6 @@ if __name__ == '__main__':
   # env
   world = dm.build_world(enable_draw=True, task=task_type)
 
-  # scaler
-  scaler_path = root_dir+'/data/'+str(task_type)+'/scaler-'+str(scaler_version)+'.joblib'
-  scaler = joblib.load(scaler_path)    
 
   # env dim
   obs_dim = world.env.get_state_size()

@@ -64,6 +64,7 @@ if __name__ == '__main__':
   # data collection np arrays
   step_counter = 0
   discarded = 0
+  # + concatenate the 2 tuple.
   observations = np.empty((num_interactions,) + (obs_dim,)) # 197
   actions = np.empty((num_interactions,) + (action_dim,)) # 36
 

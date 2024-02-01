@@ -310,7 +310,7 @@ class PyBulletDeepMimicEnv(Env):
         ]
 
         if self._useStablePD:
-          usePythonStablePD = False
+          usePythonStablePD = False # modify
           if usePythonStablePD:
             taus = self._humanoid.computePDForces(self.desiredPose,
                                                 desiredVelocities=None,

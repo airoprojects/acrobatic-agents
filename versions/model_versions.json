@@ -15,7 +15,8 @@
         "20k-1"
     ],
     "bco-cnn-mixed": [
-        "35k-1"
+        "35k-1",
+        "40k-1"
     ],
     "bco-fc-backflip": [
         "5k-1",

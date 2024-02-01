@@ -1,0 +1,29 @@
+1.
+
+Training env:
+BCOAgentFC(
+  (fc1): Linear(in_features=197, out_features=394, bias=True)
+  (bn1): BatchNorm1d(394, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (relu): ReLU()
+  (fc2): Linear(in_features=394, out_features=36, bias=True)
+)
+Loss function: MSELoss()
+Optimizer: SGD (
+Parameter Group 0
+    dampening: 0
+    differentiable: False
+    foreach: None
+    initial_lr: 0.001
+    lr: 0.001
+    maximize: False
+    momentum: 0.9
+    nesterov: False
+    weight_decay: 0
+)
+Batch size: 128
+Epochs:2000
+DatasetLen:5000
+
+
+
+2.
