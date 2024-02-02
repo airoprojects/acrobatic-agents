@@ -71,11 +71,14 @@ if __name__ == '__main__':
 
   model_type = args.model if args.model else 'bco-cnn-backflip'
   model_version = args.version if args.version else '20k'
-  scaler_version = args.scaler if args.scaler else 20000
+  scaler_version = args.scaler if args.scaler else '20k'
   task_type = args.task if args.task else 'backflip'
+  
   
   # scaler
   scaler_type = model_type.split('-')[2]
+  # set standard scaler for mixed task
+  if scaler_type == 'mixed' and not args.scaler: scaler_version = '40k-bkj'
   scaler_path = root_dir+'/data/'+str(scaler_type)+'/scaler-'+str(scaler_version)+'.joblib'
   scaler = joblib.load(scaler_path)    
 
@@ -85,6 +88,7 @@ if __name__ == '__main__':
     else:
       task_type = 'backflip'
 
+
   # env set up
   update_timestep = 1. / 240.
   animating = True
@@ -92,7 +96,7 @@ if __name__ == '__main__':
   # args = sys.argv[1:]
 
   # env
-  world = dm.build_world(enable_draw=True, task=task_type)
+  world = dm.build_world(enable_draw=True,enable_stable_pd=True, task=task_type)
 
   # env dim
   obs_dim = world.env.get_state_size()

@@ -168,13 +168,13 @@ datasets
 backups/
 
 # model checpoints 
-*.pt
+# *.pt
 
 # rollout data
 *.npy
 
 # fit scaler
-*.joblib
+# *.joblib
 
 # vscode
 .vscode/
