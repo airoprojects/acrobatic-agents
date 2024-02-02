@@ -5,15 +5,15 @@ RL - Sapienza (AIRO) 2023/2024 -  Bruno Francesco Nocera, Leonardo Colosi
 
 ---
 ## Table of content
-0. [Introduction](#introduction)
-1. [Getting Started](#getting-started)
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
   - [Environment Setup](#environment-setup)
   - [Quick Fixes](#some-quick-fixes-may-be-needed)
   - [Requirements](#install-all-other-requirements)
   - [Library incompatibility](#library-incompatibility)
-2. [How to run](#how-to-run)
-3. [Resources](#useful-resources)
-4. [References](#references)
+- [How to run](#how-to-run)
+- [Resources](#useful-resources)
+- [References](#references)
 ---
 
 # Introduction
