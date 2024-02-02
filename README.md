@@ -78,5 +78,4 @@ To explore some resources used/related to the project look here [resources](reso
 [2] Bullet Physics SDK  [bullet3](https://github.com/bulletphysics/bullet3.git)
 
 Backflip demonstration:
-
-https://drive.google.com/file/d/1oAatlrRgl3KW3v4MTVYScH36jAs1xo3_/view?usp=drive_link
+<video src="https://drive.google.com/file/d/1oAatlrRgl3KW3v4MTVYScH36jAs1xo3_/view?usp=drive_link" width="300" />
