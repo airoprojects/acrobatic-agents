@@ -370,45 +370,9 @@ class RLAgent(ABC):
     # MAJOR CHANGE:
     # override action selection by activating the cloning agent:
     # print(f'override -> {override.name}')
+      
     if override:
       # print('OVERRIDE MODEEEE')
-      
-      # policy = copy.deepcopy(override['policy'])
-      
-      # # START min/max
-      # r_obs = torch.from_numpy(s).float().unsqueeze(0) # [1,196]
-
-      # # extract min max
-      # if not self.min_val and not self.max_val:
-      #   self.min_val = override['min']
-      #   self.max_val = override['max']
-      #   print(f'start: {self.min_val}')
-      #   print(f'start: {self.max_val}')
-
-      # # update new min max
-      # if r_obs.min() < self.min_val : 
-      #   self.min_val = obs.min()
-      #   print(f'new min: {self.min_val}')
-
-      # if r_obs.max() > self.max_val : 
-      #   self.max_val = obs.max()
-      #   print(f'new max: {self.max_val}')
-        
-      # # min max norm
-      # obs = 2 * ((r_obs - self.min_val) / (self.max_val - self.min_val)) - 1 # [1,196]
-      # END min/max
-        
-      # robust
-      # scaler = override['scaler']
-      # n_obs = scaler.transform(s.reshape(1, -1))
-      # obs = torch.from_numpy(n_obs).float() #.unsqueeze(0) # [1,196]
-      
-      # if policy.name == 'bco-cnn':
-      #       obs = obs.unsqueeze(1)
-
-      # # action
-      # a = policy(obs).squeeze().detach().cpu().numpy()
-
       a = override.act(s)
 
       _, logp = self._decide_action(s=s, g=g)
