@@ -76,3 +76,7 @@ To explore some resources used/related to the project look here [resources](reso
 [1] Peng, Xue Bin and Abbeel, Pieter and Levine, Sergey and van de Panne, Michiel, 2018, [article](https://arxiv.org/pdf/1804.02717.pdf)
 
 [2] Bullet Physics SDK  [bullet3](https://github.com/bulletphysics/bullet3.git)
+
+Backflip demonstration:
+
+https://drive.google.com/file/d/17F36hzChdyo-mYkHd-TnpAK-2MXBmzhg/view?usp=sharing
